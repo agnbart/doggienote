@@ -1,6 +1,10 @@
 # compiled output
 /*/dist
 /*/node_modules
+/*/dist
+/*/tmp
+/*/out-tsc
+/*/bazel-out
 
 # Logs
 logs
@@ -34,4 +38,17 @@ lerna-debug.log*
 /*/!.vscode/launch.json
 /*/!.vscode/extensions.json
 
-.env
+# Miscellaneous
+/*/.angular/cache
+/*/.sass-cache/
+/*/connect.lock
+/*/coverage
+/*/libpeerconnection.log
+/*/testem.log
+/*/typings
+
+# System files
+/*/.DS_Store
+/*/Thumbs.db
+
+/doggienote-api/.env
