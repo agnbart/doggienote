@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ActivityController } from './activity.controller';
+import { ActivityController } from './dict-activity.controller';
 
 describe('ActivityController', () => {
   let controller: ActivityController;
