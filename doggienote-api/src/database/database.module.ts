@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Activity } from 'src/activity/activity.entity';
 import { Dog } from 'src/dog/dog.entity';
 
 @Module({
@@ -14,7 +15,7 @@ import { Dog } from 'src/dog/dog.entity';
               password: configService.get<string>('database.PASSWORD'),
               database: configService.get<string>('database.DATABASE'),
               // entities: ['dist/**/*.entity{.ts,.js}'],
-              entities: [Dog],
+              entities: [Dog, Activity],
               bigNumberStrings: false,
               synchronize: true,
               logging: true,
