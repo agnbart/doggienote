@@ -4,8 +4,8 @@ import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
 import { DogModule } from './dog/dog.module';
-import { ActivityModule } from './activity/activity.module';
 import configuration from './config/configuration';
+import { DictActivityModule } from './dict-activity/dict-activity.module'
 
 @Module({
   imports: [
@@ -16,7 +16,7 @@ import configuration from './config/configuration';
     // TypeOrmModule.forRoot(),
     DatabaseModule,
     DogModule,
-    ActivityModule,
+    DictActivityModule,
   ],
   controllers: [AppController],
   providers: [AppService, ConfigService],
