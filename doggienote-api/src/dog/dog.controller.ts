@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { DogService } from './dog.service';
 import { Dog } from './dog.entity';
 
@@ -24,5 +24,14 @@ export class DogController {
   @Post('/')
   createDog(@Body() dogData: Partial<Dog>): Promise<Dog> {
     return this.dogService.createDog(dogData);
+  }
+
+  @Patch('/:id')
+  async updateOne(
+    @Param('id') id: string,
+    @Body() dogData: Partial<Dog>,
+  ): Promise<Dog> {
+    const dog = await this.dogService.updateDog(id, dogData);
+    return dog;
   }
 }

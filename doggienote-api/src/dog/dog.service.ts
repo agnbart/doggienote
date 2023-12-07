@@ -27,4 +27,11 @@ export class DogService {
   async removeDog(id: string) {
     await this.dogRepository.delete( id );
   }
+
+  async updateDog(id:string, dogData: Partial<Dog>): Promise<Dog> {
+    const dogToUpdate = await this.dogRepository.findOneOrFail({ where: { id } });
+    const { name, ...rest } = dogData;
+    const updatedDog = Object.assign({}, dogToUpdate, rest);
+    return this.dogRepository.save(updatedDog);
+  }
 }
