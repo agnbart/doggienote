@@ -6,6 +6,7 @@ import { DatabaseModule } from './database/database.module';
 import { DogModule } from './dog/dog.module';
 import configuration from './config/configuration';
 import { DictActivityModule } from './dict-activity/dict-activity.module'
+import { ActivityModule } from './activity/activity.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { DictActivityModule } from './dict-activity/dict-activity.module'
     DatabaseModule,
     DogModule,
     DictActivityModule,
+    ActivityModule,
   ],
   controllers: [AppController],
   providers: [AppService, ConfigService],
