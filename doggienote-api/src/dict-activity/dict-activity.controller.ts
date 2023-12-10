@@ -1,6 +1,14 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { DictActivityService } from './dict-activity.service';
-import { DictActivity } from './activity.entity';
+import { DictActivity } from './dic-activity.entity';
 
 @Controller('dict-activity')
 export class DictActivityController {
@@ -17,14 +25,14 @@ export class DictActivityController {
   }
 
   @Post('/')
-  createActivity(
+  createDictActivity(
     @Body() activityData: Partial<DictActivity>,
   ): Promise<DictActivity> {
     return this.dictActivityService.createDictActivity(activityData);
   }
 
   @Patch('/:id')
-  async updateOne(
+  async updateDictActivity(
     @Param('id') id: string,
     @Body() activityData: Partial<DictActivity>,
   ): Promise<DictActivity> {
@@ -33,5 +41,10 @@ export class DictActivityController {
       activityData,
     );
     return dictActivity;
+  }
+
+  @Delete('/:id')
+  async deleteDictActivity(@Param('id') id: string) {
+    return this.dictActivityService.deleteActivity(id);
   }
 }

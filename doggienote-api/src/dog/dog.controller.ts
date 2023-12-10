@@ -27,7 +27,7 @@ export class DogController {
   }
 
   @Patch('/:id')
-  async updateOne(
+  async updateDog(
     @Param('id') id: string,
     @Body() dogData: Partial<Dog>,
   ): Promise<Dog> {

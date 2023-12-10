@@ -8,11 +8,11 @@ export class DictActivity {
   @Column({
     length: 15,
   })
-  activity: string;
+  dict_activity: string;
 
   @Column({
     type: 'text',
-    default: '',
+    default: null,
   })
   description: string;
 
