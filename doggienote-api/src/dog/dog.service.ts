@@ -1,8 +1,9 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException, Res } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Dog } from './dog.entity';
 import { ActivityService } from 'src/activity/activity.service';
+import { ErrorDoggienote } from 'src/error-doggienote';
 
 @Injectable()
 export class DogService {
@@ -17,8 +18,21 @@ export class DogService {
     return await this.dogRepository.find();
   }
 
+  // async findOne(id: string): Promise<Dog> {
+  //   return await this.dogRepository.findOneOrFail({ where: { id } });
+  // }
+
   async findOne(id: string): Promise<Dog> {
-    return await this.dogRepository.findOneOrFail({ where: { id } });
+    try {
+      const dog = await this.dogRepository.findOne({ where: { id } });
+      if (dog === null) {
+        throw new ErrorDoggienote('Dziwny pies', 404, 'Jakiś string');
+      } else {
+        return dog;
+      }
+    } catch (error) {
+      throw error;
+    }
   }
 
   async createDog(dogData: Partial<Dog>): Promise<Dog> {

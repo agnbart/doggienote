@@ -1,6 +1,17 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Res,
+} from '@nestjs/common';
+import { Response } from 'express';
 import { DogService } from './dog.service';
 import { Dog } from './dog.entity';
+
 
 @Controller('dogs')
 export class DogController {
@@ -13,7 +24,8 @@ export class DogController {
 
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<Dog> {
-    return await this.dogService.findOne(id);
+    const dog = await this.dogService.findOne(id);
+    return dog;
   }
 
   @Delete(':id')
