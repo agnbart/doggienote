@@ -13,31 +13,31 @@ import { Activity } from './activity.entity';
 
 @Controller('activity')
 export class ActivityController {
-private readonly logger = new Logger();
+  private readonly logger = new Logger();
 
   constructor(private readonly activityService: ActivityService) {}
-
- 
-
-  @Get('byDictActivity/:id_dict_activity')
-  async findByIdDictActivity(@Param('id_dict_activity') id_dict_activity: string): Promise<Activity[]> {
-    return await this.activityService.findByIdDictActivity(id_dict_activity);
-  }
-
-  @Get(':id')
-  async findOne(@Param('id') id:string) {
-    this.logger.log(id);
-    return await this.activityService.findOne(id);
-  }
 
   @Get()
   async findAll() {
     return await this.activityService.findAll();
   }
 
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    this.logger.log(id);
+    return await this.activityService.findOne(id);
+  }
+
   @Get('byDog/:id_dog')
   async findByIdDog(@Param('id_dog') id_dog: string): Promise<Activity[]> {
     return await this.activityService.findByIdDog(id_dog);
+  }
+
+  @Get('byDictActivity/:id_dict_activity')
+  async findByIdDictActivity(
+    @Param('id_dict_activity') id_dict_activity: string,
+  ): Promise<Activity[]> {
+    return await this.activityService.findByIdDictActivity(id_dict_activity);
   }
 
   @Post()
