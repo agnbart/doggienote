@@ -14,24 +14,22 @@ import { DictActivity } from './dic-activity.entity';
 export class DictActivityController {
   constructor(private readonly dictActivityService: DictActivityService) {}
 
-  @Get('/')
-  findAll() {
-    return this.dictActivityService.findAll();
+  @Get()
+  async findAll() {
+    return await this.dictActivityService.findAll();
   }
 
-  @Get('/:id')
-  findOne(@Param('id') id: string): Promise<DictActivity> {
-    return this.dictActivityService.findOne(id);
+  @Get(':id')
+  async findOne(@Param('id') id: string): Promise<DictActivity> {
+    return await this.dictActivityService.findOne(id);
   }
 
-  @Post('/')
-  createDictActivity(
-    @Body() activityData: Partial<DictActivity>,
-  ): Promise<DictActivity> {
-    return this.dictActivityService.createDictActivity(activityData);
+  @Post()
+  async createDictActivity(@Body() activityData: Partial<DictActivity>): Promise<DictActivity> {
+    return await this.dictActivityService.createDictActivity(activityData);
   }
 
-  @Patch('/:id')
+  @Patch(':id')
   async updateDictActivity(
     @Param('id') id: string,
     @Body() activityData: Partial<DictActivity>,
@@ -43,7 +41,7 @@ export class DictActivityController {
     return dictActivity;
   }
 
-  @Delete('/:id')
+  @Delete(':id')
   async deleteDictActivity(@Param('id') id: string) {
     return this.dictActivityService.deleteActivity(id);
   }

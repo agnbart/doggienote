@@ -1,11 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-
 import { Repository } from 'typeorm';
 import { DictActivity } from './dic-activity.entity';
 
 @Injectable()
 export class DictActivityService {
+  private readonly logger = new Logger(DictActivityService.name);
+  
   constructor(
     @InjectRepository(DictActivity)
     private dictActivityRepository: Repository<DictActivity>,
@@ -20,10 +21,10 @@ export class DictActivityService {
   }
 
   async createDictActivity(
-    dictActivityData: Partial<DictActivity>,
+    dictActivityData: Partial<DictActivity>
   ): Promise<DictActivity> {
     const newDictActivity =
-      await this.dictActivityRepository.create(dictActivityData);
+      this.dictActivityRepository.create(dictActivityData);
     return await this.dictActivityRepository.save(newDictActivity);
   }
 
@@ -44,12 +45,12 @@ export class DictActivityService {
     const dictActivityToDelete =
       await this.dictActivityRepository.findOneOrFail({ where: { id } });
     if (dictActivityToDelete.removable === true) {
-      const dictActivityNameDeleted = dictActivityToDelete.dict_activity;
+      // const dictActivityNameDeleted = dictActivityToDelete.dict_activity;
       await this.dictActivityRepository.delete(id);
       //TODO: handle returning deleted dict_activity name
-      console.log(`${dictActivityNameDeleted} was deleted`);
+      this.logger.log(`DictActivitY: ${dictActivityToDelete.id} was deleted`);
     } else {
-      return new Error('This activity cannot be deleted.')
+      return new Error('This activity cannot be deleted.');
     }
   }
 }

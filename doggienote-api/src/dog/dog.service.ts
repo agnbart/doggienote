@@ -19,7 +19,7 @@ export class DogService {
   }
 
   async createDog(dogData: Partial<Dog>): Promise<Dog> {
-    const newDog = await this.dogRepository.create(dogData);
+    const newDog = this.dogRepository.create(dogData);
     return await this.dogRepository.save(newDog);
   }
 

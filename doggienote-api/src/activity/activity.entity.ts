@@ -20,10 +20,10 @@ export class Activity {
 
   @Column({
     type: 'text',
-    default: '',
+    default: null,
   })
   description: string | null;
 
   @Column({ type: 'float', precision: 4, scale: 2 })
-  acivity_duration: number | null;
+  activity_duration: number | null;
 }

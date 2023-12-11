@@ -14,11 +14,15 @@ export class ActivityService {
     return await this.activityRepository.find();
   }
 
-  async findByIdDog(id_dog: string): Promise<Activity[]> {
-    return await this.activityRepository.find({ where: { id_dog } });
+  async findOne(id: string): Promise<Activity[]> {
+    return await this.activityRepository.find({ where: { id} });
   }
 
-  async findByIdActivity(id_dict_activity: string): Promise<Activity[]> {
+  async findByIdDog(id_dog: string): Promise<Activity[]> {
+    return await this.activityRepository.find({ where: { id_dog} });
+  }
+
+  async findByIdDictActivity(id_dict_activity: string): Promise<Activity[]> {
     return await this.activityRepository.find({ where: { id_dict_activity } });
   }
 
@@ -38,7 +42,7 @@ export class ActivityService {
     const activityToUpdate = await this.activityRepository.findOneOrFail({
       where: { id },
     });
-    const { id_dog, id_dict_activity, ...rest } = activityData;
+    const { id_dog: id_dog, id_dict_activity, ...rest } = activityData;
     const updateActivity = Object.assign({}, activityToUpdate, rest);
     return this.activityRepository.save(updateActivity);
   }

@@ -6,27 +6,27 @@ import { Dog } from './dog.entity';
 export class DogController {
   constructor(private readonly dogService: DogService) {}
 
-  @Get('/')
-  findAll() {
-    return this.dogService.findAll();
+  @Get()
+  async findAll() {
+    return await this.dogService.findAll();
   }
 
-  @Get('/:id')
-  findOne(@Param('id') id: string): Promise<Dog> {
-    return this.dogService.findOne(id);
+  @Get(':id')
+  async findOne(@Param('id') id: string): Promise<Dog> {
+    return await this.dogService.findOne(id);
   }
 
-  @Delete('/:id')
-  removeDog(@Param('id') id: string) {
-    this.dogService.removeDog(id);
+  @Delete(':id')
+  async removeDog(@Param('id') id: string) {
+    await this.dogService.removeDog(id);
   }
 
-  @Post('/')
-  createDog(@Body() dogData: Partial<Dog>): Promise<Dog> {
-    return this.dogService.createDog(dogData);
+  @Post()
+  async createDog(@Body() dogData: Partial<Dog>): Promise<Dog> {
+    return await this.dogService.createDog(dogData);
   }
 
-  @Patch('/:id')
+  @Patch(':id')
   async updateDog(
     @Param('id') id: string,
     @Body() dogData: Partial<Dog>,
