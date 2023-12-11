@@ -1,10 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DictActivity } from './activity.entity';
 import { Repository } from 'typeorm';
+import { DictActivity } from './dic-activity.entity';
 
 @Injectable()
 export class DictActivityService {
+  private readonly logger = new Logger(DictActivityService.name);
+  
   constructor(
     @InjectRepository(DictActivity)
     private dictActivityRepository: Repository<DictActivity>,
@@ -19,9 +21,10 @@ export class DictActivityService {
   }
 
   async createDictActivity(
-    dictActivityData: Partial<DictActivity>,
+    dictActivityData: Partial<DictActivity>
   ): Promise<DictActivity> {
-    const newDictActivity = await this.dictActivityRepository.create(dictActivityData);
+    const newDictActivity =
+      this.dictActivityRepository.create(dictActivityData);
     return await this.dictActivityRepository.save(newDictActivity);
   }
 
@@ -29,11 +32,25 @@ export class DictActivityService {
     id: string,
     activityData: Partial<DictActivity>,
   ): Promise<DictActivity> {
-    const dogToUpdate = await this.dictActivityRepository.findOneOrFail({
-      where: { id },
-    });
-    const { activity, ...rest } = activityData;
-    const updatedDog = Object.assign({}, dogToUpdate, rest);
-    return this.dictActivityRepository.save(updatedDog);
+    const dictActivityToUpdate =
+      await this.dictActivityRepository.findOneOrFail({
+        where: { id },
+      });
+    const { dict_activity, ...rest } = activityData;
+    const updatedDictActivity = Object.assign({}, dictActivityToUpdate, rest);
+    return this.dictActivityRepository.save(updatedDictActivity);
+  }
+
+  async deleteActivity(id: string) {
+    const dictActivityToDelete =
+      await this.dictActivityRepository.findOneOrFail({ where: { id } });
+    if (dictActivityToDelete.removable === true) {
+      // const dictActivityNameDeleted = dictActivityToDelete.dict_activity;
+      await this.dictActivityRepository.delete(id);
+      //TODO: handle returning deleted dict_activity name
+      this.logger.log(`DictActivitY: ${dictActivityToDelete.id} was deleted`);
+    } else {
+      return new Error('This activity cannot be deleted.');
+    }
   }
 }

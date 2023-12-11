@@ -1,30 +1,36 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { DictActivityService } from './dict-activity.service';
-import { DictActivity } from './activity.entity';
+import { DictActivity } from './dic-activity.entity';
 
 @Controller('dict-activity')
 export class DictActivityController {
   constructor(private readonly dictActivityService: DictActivityService) {}
 
-  @Get('/')
-  findAll() {
-    return this.dictActivityService.findAll();
+  @Get()
+  async findAll() {
+    return await this.dictActivityService.findAll();
   }
 
-  @Get('/:id')
-  findOne(@Param('id') id: string): Promise<DictActivity> {
-    return this.dictActivityService.findOne(id);
+  @Get(':id')
+  async findOne(@Param('id') id: string): Promise<DictActivity> {
+    return await this.dictActivityService.findOne(id);
   }
 
-  @Post('/')
-  createActivity(
-    @Body() activityData: Partial<DictActivity>,
-  ): Promise<DictActivity> {
-    return this.dictActivityService.createDictActivity(activityData);
+  @Post()
+  async createDictActivity(@Body() activityData: Partial<DictActivity>): Promise<DictActivity> {
+    return await this.dictActivityService.createDictActivity(activityData);
   }
 
-  @Patch('/:id')
-  async updateOne(
+  @Patch(':id')
+  async updateDictActivity(
     @Param('id') id: string,
     @Body() activityData: Partial<DictActivity>,
   ): Promise<DictActivity> {
@@ -33,5 +39,10 @@ export class DictActivityController {
       activityData,
     );
     return dictActivity;
+  }
+
+  @Delete(':id')
+  async deleteDictActivity(@Param('id') id: string) {
+    return this.dictActivityService.deleteActivity(id);
   }
 }
