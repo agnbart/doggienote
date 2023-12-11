@@ -7,6 +7,8 @@ import { DogModule } from './dog/dog.module';
 import configuration from './config/configuration';
 import { DictActivityModule } from './dict-activity/dict-activity.module'
 import { ActivityModule } from './activity/activity.module';
+import { ErrorFilter } from './error.filter';
+import { APP_FILTER } from '@nestjs/core';
 
 
 @Module({
@@ -22,6 +24,9 @@ import { ActivityModule } from './activity/activity.module';
     ActivityModule,
   ],
   controllers: [AppController],
-  providers: [AppService, ConfigService],
+  providers: [AppService, ConfigService, {
+    provide: APP_FILTER,
+    useClass: ErrorFilter,
+  },],
 })
 export class AppModule {}
