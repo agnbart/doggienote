@@ -8,6 +8,7 @@ import configuration from './config/configuration';
 import { DictActivityModule } from './dict-activity/dict-activity.module'
 import { ActivityModule } from './activity/activity.module';
 
+
 @Module({
   imports: [
     ConfigModule.forRoot({
