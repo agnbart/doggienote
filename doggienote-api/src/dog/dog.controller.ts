@@ -7,7 +7,7 @@ export class DogController {
   constructor(private readonly dogService: DogService) {}
 
   @Get()
-  async findAll() {
+  async findAll(): Promise<Dog[]> {
     return await this.dogService.findAll();
   }
 

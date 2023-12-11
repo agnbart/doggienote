@@ -31,7 +31,7 @@ private readonly logger = new Logger();
   }
 
   @Get()
-  async findAll() {
+  async findAll(): Promise<Activity[]> {
     return await this.activityService.findAll();
   }
 

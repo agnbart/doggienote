@@ -26,8 +26,8 @@ export class ActivityService {
     return await this.activityRepository.find({ where: { id_dict_activity } });
   }
 
-  async createActivity(acivityData: Partial<Activity>): Promise<Activity> {
-    const newActivity = await this.activityRepository.create(acivityData);
+  async createActivity(activityData: Partial<Activity>): Promise<Activity> {
+    const newActivity = await this.activityRepository.create(activityData);
     return await this.activityRepository.save(newActivity);
   }
 

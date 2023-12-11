@@ -15,7 +15,7 @@ export class DictActivityController {
   constructor(private readonly dictActivityService: DictActivityService) {}
 
   @Get()
-  async findAll() {
+  async findAll(): Promise<DictActivity[]> {
     return await this.dictActivityService.findAll();
   }
 
