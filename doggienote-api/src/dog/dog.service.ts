@@ -1,13 +1,16 @@
-import { Injectable, Logger, NotFoundException, Res } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Dog } from './dog.entity';
 import { ActivityService } from 'src/activity/activity.service';
-import { ErrorDoggienote } from 'src/error-doggienote';
+import {
+  ErrorDoggienote,
+  ErrorDoggienoteNotCreated,
+  ErrorDoggienoteNotFound,
+} from 'src/error-doggienote';
 
 @Injectable()
 export class DogService {
-  private logger = new Logger(DogService.name);
   constructor(
     @InjectRepository(Dog)
     private dogRepository: Repository<Dog>,
@@ -15,18 +18,19 @@ export class DogService {
   ) {}
 
   async findAll(): Promise<Dog[]> {
-    return await this.dogRepository.find();
+    const dogs = await this.dogRepository.find();
+    if (dogs === null) {
+      throw new ErrorDoggienoteNotFound();
+    } else {
+      return dogs;
+    }
   }
-
-  // async findOne(id: string): Promise<Dog> {
-  //   return await this.dogRepository.findOneOrFail({ where: { id } });
-  // }
 
   async findOne(id: string): Promise<Dog> {
     try {
       const dog = await this.dogRepository.findOne({ where: { id } });
       if (dog === null) {
-        throw new ErrorDoggienote('Dziwny pies', 404, 'Jakiś string');
+        throw new ErrorDoggienoteNotFound();
       } else {
         return dog;
       }
@@ -37,28 +41,38 @@ export class DogService {
 
   async createDog(dogData: Partial<Dog>): Promise<Dog> {
     const newDog = this.dogRepository.create(dogData);
+    if (newDog === null) {
+      throw new ErrorDoggienoteNotCreated();
+    }
     return await this.dogRepository.save(newDog);
   }
 
   async removeDog(id: string) {
-    try {
       const activity = await this.activityServis.findByIdDog(id);
       if (activity.length === 0) {
         await this.dogRepository.delete(id);
+        if ('affected') {
+          throw new ErrorDoggienoteNotFound();
+        }
       } else {
-        throw new Error('This dog has activity. It cannot be removed.');
+        throw new ErrorDoggienote(
+          'This dog has activity. It cannot be removed.',
+          403,
+          'dn_3',
+        );
       }
-    } catch (error) {
-      this.logger.error(error);
-    }
   }
 
   async updateDog(id: string, dogData: Partial<Dog>): Promise<Dog> {
     const dogToUpdate = await this.dogRepository.findOneOrFail({
       where: { id },
     });
-    const { name, ...rest } = dogData;
-    const updatedDog = Object.assign({}, dogToUpdate, rest);
-    return this.dogRepository.save(updatedDog);
+    if (dogToUpdate === null) {
+      throw new ErrorDoggienoteNotFound();
+    } else {
+      const { name, ...rest } = dogData;
+      const updatedDog = Object.assign({}, dogToUpdate, rest);
+      return this.dogRepository.save(updatedDog);
+    }
   }
 }

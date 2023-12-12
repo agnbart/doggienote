@@ -25,7 +25,9 @@ export class DictActivityController {
   }
 
   @Post()
-  async createDictActivity(@Body() activityData: Partial<DictActivity>): Promise<DictActivity> {
+  async createDictActivity(
+    @Body() activityData: Partial<DictActivity>,
+  ): Promise<DictActivity> {
     return await this.dictActivityService.createDictActivity(activityData);
   }
 
@@ -43,6 +45,6 @@ export class DictActivityController {
 
   @Delete(':id')
   async deleteDictActivity(@Param('id') id: string) {
-    return this.dictActivityService.deleteActivity(id);
+    return this.dictActivityService.deleteDictActivity(id);
   }
 }

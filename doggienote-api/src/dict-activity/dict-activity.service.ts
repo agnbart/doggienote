@@ -1,12 +1,16 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { DictActivity } from './dic-activity.entity';
 import { ActivityService } from 'src/activity/activity.service';
+import {
+  ErrorDoggienote,
+  ErrorDoggienoteNotCreated,
+  ErrorDoggienoteNotFound,
+} from 'src/error-doggienote';
 
 @Injectable()
 export class DictActivityService {
-  private readonly logger = new Logger(DictActivityService.name);
 
   constructor(
     @InjectRepository(DictActivity)
@@ -15,11 +19,23 @@ export class DictActivityService {
   ) {}
 
   async findAll(): Promise<DictActivity[]> {
-    return await this.dictActivityRepository.find();
+    const dictActivities = await this.dictActivityRepository.find();
+    if (dictActivities === null) {
+      throw new ErrorDoggienoteNotFound();
+    } else {
+      return dictActivities;
+    }
   }
 
   async findOne(id: string): Promise<DictActivity> {
-    return await this.dictActivityRepository.findOneOrFail({ where: { id } });
+    const dictActivity = await this.dictActivityRepository.findOneOrFail({
+      where: { id },
+    });
+    if (dictActivity === null) {
+      throw new ErrorDoggienoteNotFound();
+    } else {
+      return dictActivity;
+    }
   }
 
   async createDictActivity(
@@ -27,7 +43,11 @@ export class DictActivityService {
   ): Promise<DictActivity> {
     const newDictActivity =
       this.dictActivityRepository.create(dictActivityData);
-    return await this.dictActivityRepository.save(newDictActivity);
+    if (newDictActivity === null) {
+      throw new ErrorDoggienoteNotCreated();
+    } else {
+      return await this.dictActivityRepository.save(newDictActivity);
+    }
   }
 
   async updateActivity(
@@ -38,34 +58,41 @@ export class DictActivityService {
       await this.dictActivityRepository.findOneOrFail({
         where: { id },
       });
-    const { dict_activity, ...rest } = activityData;
-    const updatedDictActivity = Object.assign({}, dictActivityToUpdate, rest);
-    return this.dictActivityRepository.save(updatedDictActivity);
+    if (dictActivityToUpdate === null) {
+      throw new ErrorDoggienoteNotFound();
+    } else {
+      const { dict_activity, ...rest } = activityData;
+      const updatedDictActivity = Object.assign({}, dictActivityToUpdate, rest);
+      return this.dictActivityRepository.save(updatedDictActivity);
+    }
   }
 
-  async deleteActivity(id: string): Promise<Error> {
-    try {
-      const dictActivityToDelete =
-        await this.dictActivityRepository.findOneOrFail({ where: { id } });
-
-      if (dictActivityToDelete.removable === true) {
-
-        const activity = await this.activityServis.findByIdDictActivity(id);
-
-        if (activity.length === 0) {
-          await this.dictActivityRepository.delete(id);
-          //TODO: handle returning deleted dict_activity name
-          this.logger.log(`DictActivitY: ${dictActivityToDelete.id} was deleted`);
-        } else {
-          throw new Error(
-            'This dictActivity is used in Activity database. It cannot be removed.',
-          );
-        }
+  async deleteDictActivity(id: string) {
+    const dictActivityToDelete = await this.dictActivityRepository.findOne({
+      where: { id },
+    });
+    if (dictActivityToDelete === null) {
+      throw new ErrorDoggienoteNotFound();
+    } else {
+      if (dictActivityToDelete.removable === false) {
+        throw new ErrorDoggienote(
+          'This dictActivity cannot be removed',
+          403,
+          'dn_4',
+        );
       } else {
-        return new Error('This activity cannot be deleted.');
+        if (dictActivityToDelete.removable === true) {
+          if (await this.activityServis.findByIdDictActivity(id)) {
+            throw new ErrorDoggienote(
+              'This dictActivity is used in Activity database. It cannot be removed.',
+              403,
+              'dn_3',
+            );
+          } else {
+            await this.dictActivityRepository.delete(id);
+          }
+        }
       }
-    } catch (error) {
-      this.logger.error(error);
     }
   }
 }
