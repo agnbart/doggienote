@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Activity } from './activity.entity';
+import { Activity } from './activity';
 import { Repository } from 'typeorm';
 import { ErrorDoggienoteNotFound } from 'src/error-doggienote';
 

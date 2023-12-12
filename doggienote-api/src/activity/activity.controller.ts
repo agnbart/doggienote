@@ -9,23 +9,23 @@ import {
   Post,
 } from '@nestjs/common';
 import { ActivityService } from './activity.service';
-import { Activity } from './activity.entity';
+import { Activity } from './activity';
 
 @Controller('activity')
 export class ActivityController {
-private readonly logger = new Logger();
+  private readonly logger = new Logger();
 
   constructor(private readonly activityService: ActivityService) {}
 
- 
-
   @Get('byDictActivity/:id_dict_activity')
-  async findByIdDictActivity(@Param('id_dict_activity') id_dict_activity: string): Promise<Activity[]> {
+  async findByIdDictActivity(
+    @Param('id_dict_activity') id_dict_activity: string,
+  ): Promise<Activity[]> {
     return await this.activityService.findByIdDictActivity(id_dict_activity);
   }
 
   @Get(':id')
-  async findOne(@Param('id') id:string) {
+  async findOne(@Param('id') id: string) {
     this.logger.log(id);
     return await this.activityService.findOne(id);
   }
