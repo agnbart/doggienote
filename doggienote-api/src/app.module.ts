@@ -9,6 +9,7 @@ import { DictActivityModule } from './dict-activity/dict-activity.module'
 import { ActivityModule } from './activity/activity.module';
 import { ErrorFilter } from './error.filter';
 import { APP_FILTER } from '@nestjs/core';
+import { CompetitionModule } from './competition/competition.module';
 
 
 @Module({
@@ -22,6 +23,7 @@ import { APP_FILTER } from '@nestjs/core';
     DogModule,
     DictActivityModule,
     ActivityModule,
+    CompetitionModule,
   ],
   controllers: [AppController],
   providers: [AppService, ConfigService, {
