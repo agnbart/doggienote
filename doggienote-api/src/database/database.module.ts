@@ -1,9 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Activity } from 'src/activity/activity';
-import { DictActivity } from 'src/dict-activity/dic-activity.entity';
-import { Dog } from 'src/dog/dog.entity';
 
 @Module({
   imports: [
