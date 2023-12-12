@@ -9,7 +9,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { ActivityService } from './activity.service';
-import { Activity } from './activity';
+import { Activity } from './activity.entity';
 
 @Controller('activity')
 export class ActivityController {
