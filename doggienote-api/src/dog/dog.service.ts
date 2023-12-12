@@ -7,7 +7,7 @@ import {
   ErrorDoggienote,
   ErrorDoggienoteNotCreated,
   ErrorDoggienoteNotFound,
-} from '/error-doggienote';
+} from '../error-doggienote';
 
 @Injectable()
 export class DogService {
