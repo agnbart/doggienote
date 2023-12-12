@@ -15,7 +15,7 @@ import { Dog } from 'src/dog/dog.entity';
         username: configService.get<string>('database.USER'),
         password: configService.get<string>('database.PASSWORD'),
         database: configService.get<string>('database.DATABASE'),
-        // entities: ['dist/**/*.entity{.ts,.js}'],
+        entities: ['dist/**/*.entity{.ts,.js}'],
         // entities: [Dog, DictActivity, Activity],
         bigNumberStrings: false,
         synchronize: true,
