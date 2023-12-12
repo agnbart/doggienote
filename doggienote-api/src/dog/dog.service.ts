@@ -2,12 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Dog } from './dog.entity';
-import { ActivityService } from 'src/activity/activity.service';
+import { ActivityService } from '/activity/activity.service';
 import {
   ErrorDoggienote,
   ErrorDoggienoteNotCreated,
   ErrorDoggienoteNotFound,
-} from 'src/error-doggienote';
+} from '/error-doggienote';
 
 @Injectable()
 export class DogService {

@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Activity } from './activity';
 import { Repository } from 'typeorm';
-import { ErrorDoggienoteNotFound } from 'src/error-doggienote';
+import { ErrorDoggienoteNotFound } from '/error-doggienote';
 
 @Injectable()
 export class ActivityService {
