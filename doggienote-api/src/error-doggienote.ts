@@ -27,3 +27,9 @@ export class ErrorDoggienoteNotCreated extends ErrorDoggienote {
     super('The record was not created', 400, 'dn_2');
   }
 }
+
+export class ErrorDoggieNoteIsEmpty extends ErrorDoggienote {
+  constructor() {
+    super('The field cannot be empty.', 400, 'dn_5');
+  }
+}
