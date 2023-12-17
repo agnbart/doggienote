@@ -2,14 +2,15 @@ import { Body, Controller, Get, Logger, Param, Post } from '@nestjs/common';
 import { CompetitionService } from './competition.service';
 import { Competition } from './competition.entity';
 import { IsEmpty } from 'class-validator';
+import { CompetitionValidation } from './competition.validation';
 
-export class CreateCompetitionDto{
-    @IsEmpty()
-    name: string;
+// export class CreateCompetitionDto{
+//     @IsEmpty()
+//     name: string;
 
-    @IsEmpty()
-    competition_country: string;
-}
+//     @IsEmpty()
+//     competition_country: string;
+// }
 
 
 @Controller('competition')
@@ -30,7 +31,7 @@ export class CompetitionController {
 
   @Post()
   async createCompetition(
-    @Body() competitionData: CreateCompetitionDto,
+    @Body() competitionData: CompetitionValidation,
   ): Promise<Competition> {
     return await this.competitionService.createCompetition(competitionData);
   }

@@ -5,6 +5,7 @@ import { Activity } from './../activity/activity.entity';
 import { DictActivity } from './../dict-activity/dic-activity.entity';
 import { Dog } from './../dog/dog.entity';
 import { Competition } from './../competition/competition.entity';
+import { Course } from './../course/course.entity';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { Competition } from './../competition/competition.entity';
         password: configService.get<string>('database.PASSWORD'),
         database: configService.get<string>('database.DATABASE'),
         // entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        entities: [Dog, DictActivity, Activity, Competition],
+        entities: [Dog, DictActivity, Activity, Competition, Course],
         bigNumberStrings: false,
         synchronize: true,
         logging: true,
