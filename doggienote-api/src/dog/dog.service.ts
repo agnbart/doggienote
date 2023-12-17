@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Dog } from './dog.entity';
@@ -11,6 +11,7 @@ import {
 
 @Injectable()
 export class DogService {
+  logger = new Logger(DogService.name);
   constructor(
     @InjectRepository(Dog)
     private dogRepository: Repository<Dog>,

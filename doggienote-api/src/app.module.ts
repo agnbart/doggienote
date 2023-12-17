@@ -10,6 +10,7 @@ import { ActivityModule } from './activity/activity.module';
 import { ErrorFilter } from './error.filter';
 import { APP_FILTER } from '@nestjs/core';
 import { CompetitionModule } from './competition/competition.module';
+import { CourseModule } from './course/course.module';
 
 
 @Module({
@@ -24,6 +25,7 @@ import { CompetitionModule } from './competition/competition.module';
     DictActivityModule,
     ActivityModule,
     CompetitionModule,
+    CourseModule,
   ],
   controllers: [AppController],
   providers: [AppService, ConfigService, {

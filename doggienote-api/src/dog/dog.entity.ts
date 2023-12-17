@@ -27,4 +27,9 @@ export class Dog {
   @Column({ type: 'date' })
   date_of_birth: Date;
 
+  @Column({
+    length: 2
+  })
+  height_category: string|null
+
 }

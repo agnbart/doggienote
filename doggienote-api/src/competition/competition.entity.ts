@@ -17,6 +17,7 @@ export class Competition {
 
     @Column({
         length: 40,
+        default: "Polska",
     })
     country_competition: string;
 
@@ -39,6 +40,8 @@ export class Competition {
 
     @Column({
         length: 40,
+        default: null,
+        nullable: true,
     })
     country_judge: string|null;
 }

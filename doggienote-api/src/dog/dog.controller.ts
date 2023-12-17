@@ -3,18 +3,18 @@ import {
   Controller,
   Delete,
   Get,
+  Logger,
   Param,
   Patch,
   Post,
-  Res,
 } from '@nestjs/common';
-import { Response } from 'express';
 import { DogService } from './dog.service';
 import { Dog } from './dog.entity';
 
 
 @Controller('dogs')
 export class DogController {
+  logger = new Logger(DogController.name);
   constructor(private readonly dogService: DogService) {}
 
   @Get()
