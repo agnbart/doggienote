@@ -32,4 +32,8 @@ export class Dog {
   })
   height_category: string|null
 
+  @Column({
+    length: 36,
+  })
+  id_user: string;
 }

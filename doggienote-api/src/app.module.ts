@@ -11,6 +11,8 @@ import { ErrorFilter } from './error.filter';
 import { APP_FILTER } from '@nestjs/core';
 import { CompetitionModule } from './competition/competition.module';
 import { CourseModule } from './course/course.module';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 
 
 @Module({
@@ -26,6 +28,8 @@ import { CourseModule } from './course/course.module';
     ActivityModule,
     CompetitionModule,
     CourseModule,
+    AuthModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService, ConfigService, {
