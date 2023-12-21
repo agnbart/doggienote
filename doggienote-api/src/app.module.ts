@@ -8,9 +8,12 @@ import configuration from './config/configuration';
 import { DictActivityModule } from './dict-activity/dict-activity.module'
 import { ActivityModule } from './activity/activity.module';
 import { ErrorFilter } from './error.filter';
-import { APP_FILTER } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { CompetitionModule } from './competition/competition.module';
 import { CourseModule } from './course/course.module';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
+import { JwtAuthGuard } from 'auth/jwt-auth.guard';
 
 
 @Module({
@@ -26,11 +29,17 @@ import { CourseModule } from './course/course.module';
     ActivityModule,
     CompetitionModule,
     CourseModule,
+    AuthModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService, ConfigService, {
     provide: APP_FILTER,
     useClass: ErrorFilter,
+  },
+  {
+    provide: APP_GUARD,
+    useClass: JwtAuthGuard,
   },],
 })
 export class AppModule {}

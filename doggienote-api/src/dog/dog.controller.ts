@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { DogService } from './dog.service';
 import { Dog } from './dog.entity';
+import { Public } from 'auth/auth.module';
 
 
 @Controller('dogs')
