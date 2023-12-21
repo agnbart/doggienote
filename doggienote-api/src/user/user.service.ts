@@ -13,7 +13,6 @@ export class UserService {
   ) {}
 
   async findOne(username: string): Promise<User> {
-    this.logger.log(`UserService email: ${username}`);
     return this.userRepository.findOne({ where: { username } });
   }
 
