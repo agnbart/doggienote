@@ -14,7 +14,7 @@ export class DictActivity {
     type: 'text',
     default: null,
   })
-  description: string;
+  description: string|null;
 
   @Column({
     default: false,

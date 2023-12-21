@@ -1,8 +1,14 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Activity } from './activity.entity';
+import { Activity as Activity } from './activity.entity';
 import { Repository } from 'typeorm';
-import { ErrorDoggienoteNotFound } from '../error-doggienote';
+import {
+  ErrorDoggienoteNotCreated,
+  ErrorDoggienoteNotFound,
+} from '../error-doggienote';
+import { FindActivityDto } from './dto/find-activity.dto';
+import { CreateActivityDto } from './dto/create-activity.dto';
+import { UpdateActivityDto } from './dto/update-activity.dt';
 
 @Injectable()
 export class ActivityService {
@@ -13,73 +19,84 @@ export class ActivityService {
     private activityRepository: Repository<Activity>,
   ) {}
 
-  async findAll(): Promise<Activity[]> {
-    const activities = await this.activityRepository.find();
-    this.logger.log(activities);
-    if (activities === null) {
-      throw new ErrorDoggienoteNotFound();
-    } else {
+  async findAll(): Promise<FindActivityDto[]> {
+    try {
+      const activities = await this.activityRepository.find();
       return activities;
+    } catch (error) {
+      throw new ErrorDoggienoteNotFound();
     }
   }
 
-  async findOne(id: string): Promise<Activity[]> {
-    const activity = await this.activityRepository.find({ where: { id } });
-    if (activity.length === 0) {
-      throw new ErrorDoggienoteNotFound();
-    } else {
+  async findOne(id: string): Promise<FindActivityDto> {
+    try {
+      const activity = await this.activityRepository.findOne({ where: { id } });
       return activity;
+    } catch (error) {
+      throw new ErrorDoggienoteNotFound();
     }
   }
 
-  async findByIdDog(id_dog: string): Promise<Activity[]> {
-    const foundDog = await this.activityRepository.find({ where: { id_dog } });
-    if (foundDog.length === 0) {
-      throw new ErrorDoggienoteNotFound();
-    } else {
+  async findByIdDog(id_dog: string): Promise<FindActivityDto> {
+    try {
+      const foundDog = await this.activityRepository.findOne({
+        where: { id_dog },
+      });
       return foundDog;
-    }
-  }
-
-  async findByIdDictActivity(id_dict_activity: string): Promise<Activity[]> {
-    const foundDictActivity = await this.activityRepository.find({
-      where: { id_dict_activity },
-    });
-    if (foundDictActivity.length === 0) {
+    } catch (error) {
       throw new ErrorDoggienoteNotFound();
-    } else {
-      return foundDictActivity;
     }
   }
 
-  async createActivity(activityData: Partial<Activity>): Promise<Activity> {
-    const newActivity = await this.activityRepository.create(activityData);
-    return await this.activityRepository.save(newActivity);
+  async findByIdDictActivity(
+    id_dict_activity: string,
+  ): Promise<FindActivityDto> {
+    try {
+      const foundDictActivity = await this.activityRepository.findOne({
+        where: { id_dict_activity },
+      });
+      return foundDictActivity;
+    } catch (error) {
+      throw new ErrorDoggienoteNotFound();
+    }
+  }
+
+  async createActivity(
+    activityCreateDto: CreateActivityDto,
+  ): Promise<CreateActivityDto> {
+    try {
+      const newActivity =
+        await this.activityRepository.create(activityCreateDto);
+      return await this.activityRepository.save(newActivity);
+    } catch (error) {
+      throw new ErrorDoggienoteNotCreated();
+    }
   }
 
   async removeActivity(id: string) {
-    const remAct = await this.activityRepository.find({ where: { id } });
-    if (remAct.length === 0) {
-      throw new ErrorDoggienoteNotFound();
-    } else {
+    try {
+      const removedActivity = await this.activityRepository.find({
+        where: { id },
+      });
       await this.activityRepository.delete(id);
+    } catch (error) {
+      throw new ErrorDoggienoteNotFound();
     }
   }
 
   async updateActivity(
     id: string,
-    activityData: Partial<Activity>,
-  ): Promise<Activity> {
-    const remAct = await this.activityRepository.find({ where: { id } });
-    if (remAct.length === 0) {
-      throw new ErrorDoggienoteNotFound();
-    } else {
-      const activityToUpdate = await this.activityRepository.findOneOrFail({
+    updateActivityDto: UpdateActivityDto,
+  ): Promise<UpdateActivityDto> {
+    try {
+      const activityToUpdate = await this.activityRepository.findOne({
         where: { id },
       });
-      const { id_dog: id_dog, id_dict_activity, ...rest } = activityData;
+      const { id_dog: id_dog, id_dict_activity, ...rest } = updateActivityDto;
       const updateActivity = Object.assign({}, activityToUpdate, rest);
       return this.activityRepository.save(updateActivity);
+    } catch (error) {
+      throw new ErrorDoggienoteNotFound();
     }
   }
 }

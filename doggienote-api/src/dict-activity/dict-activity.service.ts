@@ -1,69 +1,71 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { DictActivity } from './dic-activity.entity';
+import { DictActivity } from './dict-activity.entity';
 import { ActivityService } from './../activity/activity.service';
 import {
   ErrorDoggienote,
   ErrorDoggienoteNotCreated,
   ErrorDoggienoteNotFound,
 } from '../error-doggienote';
+import { FindDictActivityDto } from './dto/find-dict-activity.dto';
+import { CreateDictActivityDto } from './dto/create-dict-activity.dto';
+import { UpdateDictActivityDto } from './dto/update-dict-activity.dto';
 
 @Injectable()
 export class DictActivityService {
-
   constructor(
     @InjectRepository(DictActivity)
     private dictActivityRepository: Repository<DictActivity>,
     private activityServis: ActivityService,
   ) {}
 
-  async findAll(): Promise<DictActivity[]> {
-    const dictActivities = await this.dictActivityRepository.find();
-    if (dictActivities === null) {
-      throw new ErrorDoggienoteNotFound();
-    } else {
+  async findAll(): Promise<FindDictActivityDto[]> {
+    try {
+      const dictActivities = await this.dictActivityRepository.find();
       return dictActivities;
+    } catch (error) {
+      throw new ErrorDoggienoteNotFound();
     }
   }
 
-  async findOne(id: string): Promise<DictActivity> {
-    const dictActivity = await this.dictActivityRepository.findOneOrFail({
-      where: { id },
-    });
-    if (dictActivity === null) {
-      throw new ErrorDoggienoteNotFound();
-    } else {
+  async findOne(id: string): Promise<FindDictActivityDto> {
+    try {
+      const dictActivity = await this.dictActivityRepository.findOneOrFail({
+        where: { id },
+      });
       return dictActivity;
+    } catch (error) {
+      throw new ErrorDoggienoteNotFound();
     }
   }
 
   async createDictActivity(
-    dictActivityData: Partial<DictActivity>,
-  ): Promise<DictActivity> {
-    const newDictActivity =
-      this.dictActivityRepository.create(dictActivityData);
-    if (newDictActivity === null) {
-      throw new ErrorDoggienoteNotCreated();
-    } else {
+    dictActivityDto: CreateDictActivityDto,
+  ): Promise<CreateDictActivityDto> {
+    try {
+      const newDictActivity =
+        this.dictActivityRepository.create(dictActivityDto);
       return await this.dictActivityRepository.save(newDictActivity);
+    } catch (error) {
+      throw new ErrorDoggienoteNotCreated();
     }
   }
 
   async updateActivity(
     id: string,
-    activityData: Partial<DictActivity>,
+    updateDictActivityDto: Partial<UpdateDictActivityDto>,
   ): Promise<DictActivity> {
-    const dictActivityToUpdate =
-      await this.dictActivityRepository.findOneOrFail({
-        where: { id },
-      });
-    if (dictActivityToUpdate === null) {
-      throw new ErrorDoggienoteNotFound();
-    } else {
-      const { dict_activity, ...rest } = activityData;
+    try {
+      const dictActivityToUpdate =
+        await this.dictActivityRepository.findOneOrFail({
+          where: { id },
+        });
+      const { dict_activity, ...rest } = updateDictActivityDto;
       const updatedDictActivity = Object.assign({}, dictActivityToUpdate, rest);
       return this.dictActivityRepository.save(updatedDictActivity);
+    } catch (error) {
+      throw new ErrorDoggienoteNotFound();
     }
   }
 
