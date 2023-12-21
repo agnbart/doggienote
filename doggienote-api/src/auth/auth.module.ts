@@ -6,9 +6,10 @@ import { LocalStrategy } from './local.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
 import { JwtStrategy } from './jwt.strategy';
+import { AuthController } from './auth.controller';
 
-export const IS_PUBLIC_KEY = 'isPublic';
-export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);
+// export const IS_PUBLIC_KEY = 'isPublic';
+// export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);
     }),
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy],
-  exports: [AuthService]
+  exports: [AuthService],
+  controllers: [AuthController]
 })
 export class AuthModule {}

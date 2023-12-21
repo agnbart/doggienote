@@ -5,13 +5,14 @@ import {
   HttpStatus,
   UnauthorizedException,
   Logger,
+  NotFoundException,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { ErrorDoggienote } from './error-doggienote';
 
 @Catch()
 export class ErrorFilter implements ExceptionFilter {
-  logger = new Logger(ErrorFilter.name)
+  logger = new Logger(ErrorFilter.name);
   catch(exception: any, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
@@ -31,11 +32,16 @@ export class ErrorFilter implements ExceptionFilter {
         message = exception.message;
         error = exception.error;
         break;
+      case exception instanceof NotFoundException:
+        status = 404;
+        message = 'Not found';
+        error = 'NotFoundError';
+        break;
       default:
         status = HttpStatus.INTERNAL_SERVER_ERROR;
         message = 'Internal Server Error';
         error = 'InternalError';
-        this.logger.error(exception)
+        this.logger.error(exception);
         break;
     }
 
