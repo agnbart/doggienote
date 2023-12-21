@@ -4,12 +4,14 @@ import {
   ArgumentsHost,
   HttpStatus,
   UnauthorizedException,
+  Logger,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { ErrorDoggienote } from './error-doggienote';
 
 @Catch()
 export class ErrorFilter implements ExceptionFilter {
+  logger = new Logger(ErrorFilter.name)
   catch(exception: any, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
@@ -33,6 +35,7 @@ export class ErrorFilter implements ExceptionFilter {
         status = HttpStatus.INTERNAL_SERVER_ERROR;
         message = 'Internal Server Error';
         error = 'InternalError';
+        this.logger.error(exception)
         break;
     }
 
