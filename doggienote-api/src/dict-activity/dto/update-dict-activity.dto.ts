@@ -1,5 +1,6 @@
 export class UpdateDictActivityDto {
-    readonly dict_activity: string;
-    readonly description: string;
-    readonly removable: boolean;
+    id: string;
+    dict_activity: string;
+    description: string|null;
+    removable: boolean = false;
 }

@@ -1,8 +1,9 @@
 export class CreateDogDto {
-    readonly name: string;
-    readonly kennel_name?: string;
-    readonly official_name?: string;
-    readonly date_of_birth: Date;
-    readonly height_category: string;
-    readonly id_user: string;
-  }
+  id: string;
+  name: string;
+  kennel_name: string | null;
+  official_name: string | null;
+  date_of_birth: Date;
+  height_category: string | null;
+  id_user: string;
+}

@@ -49,7 +49,7 @@ export class DogService {
 
   async removeDog(id: string) {
     const activity = await this.activityServis.findByIdDog(id);
-    if (activity.length === 0) {
+    if (activity === null) {
       await this.dogRepository.delete(id);
       if ('affected') {
         throw new ErrorDoggienoteNotFound();

@@ -8,7 +8,6 @@ import {
   Post,
 } from '@nestjs/common';
 import { DogService } from './dog.service';
-import { Dog } from './dog.entity';
 import { CreateDogDto } from './dto/create-dog.dt';
 import { UpdateDogDto } from './dto/update-dog.dto';
 import { FindDogDto } from './dto/find-dog.dto';
@@ -34,7 +33,7 @@ export class DogController {
   }
 
   @Post()
-  async createDog(@Body() createDogDto: CreateDogDto): Promise<Dog> {
+  async createDog(@Body() createDogDto: CreateDogDto): Promise<CreateDogDto> {
     return await this.dogService.createDog(createDogDto);
   }
 
@@ -42,7 +41,7 @@ export class DogController {
   async updateDog(
     @Param('id') id: string,
     @Body() updateDogDto: UpdateDogDto,
-  ): Promise<Dog> {
+  ): Promise<UpdateDogDto> {
     const dog = await this.dogService.updateDog(id, updateDogDto);
     return dog;
   }

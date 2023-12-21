@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { DictActivity } from './dic-activity.entity';
+import { DictActivity } from './dict-activity.entity';
 import { ActivityService } from './../activity/activity.service';
 import {
   ErrorDoggienote,

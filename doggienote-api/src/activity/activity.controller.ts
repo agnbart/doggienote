@@ -9,7 +9,9 @@ import {
   Post,
 } from '@nestjs/common';
 import { ActivityService } from './activity.service';
-import { Activity } from './activity.entity';
+import { FindActivityDto } from './dto/find-activity.dto';
+import { CreateActivityDto } from './dto/create-activity.dto';
+import { UpdateActivityDto } from './dto/update-activity.dt';
 
 @Controller('activity')
 export class ActivityController {
@@ -20,7 +22,7 @@ export class ActivityController {
   @Get('byDictActivity/:id_dict_activity')
   async findByIdDictActivity(
     @Param('id_dict_activity') id_dict_activity: string,
-  ): Promise<Activity[]> {
+  ): Promise<FindActivityDto> {
     return await this.activityService.findByIdDictActivity(id_dict_activity);
   }
 
@@ -31,20 +33,20 @@ export class ActivityController {
   }
 
   @Get()
-  async findAll(): Promise<Activity[]> {
+  async findAll(): Promise<FindActivityDto[]> {
     return await this.activityService.findAll();
   }
 
   @Get('byDog/:id_dog')
-  async findByIdDog(@Param('id_dog') id_dog: string): Promise<Activity[]> {
+  async findByIdDog(@Param('id_dog') id_dog: string): Promise<FindActivityDto> {
     return await this.activityService.findByIdDog(id_dog);
   }
 
   @Post()
   async createActivity(
-    @Body() activityData: Partial<Activity>,
-  ): Promise<Activity> {
-    return await this.activityService.createActivity(activityData);
+    @Body() createActivityDto: CreateActivityDto,
+  ): Promise<CreateActivityDto> {
+    return await this.activityService.createActivity(createActivityDto);
   }
 
   @Delete(':id')
@@ -55,11 +57,11 @@ export class ActivityController {
   @Patch(':id')
   async updateActivity(
     @Param('id') id: string,
-    @Body() activityData: Partial<Activity>,
-  ): Promise<Activity> {
+    @Body() updateActivityDto: UpdateActivityDto,
+  ): Promise<UpdateActivityDto> {
     const activity = await this.activityService.updateActivity(
       id,
-      activityData,
+      updateActivityDto,
     );
     return activity;
   }

@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Activity } from './../activity/activity.entity';
-import { DictActivity } from './../dict-activity/dic-activity.entity';
+import { DictActivity } from '../dict-activity/dict-activity.entity';
 import { Dog } from './../dog/dog.entity';
 import { Competition } from './../competition/competition.entity';
 import { Course } from './../course/course.entity';

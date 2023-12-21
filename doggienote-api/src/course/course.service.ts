@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import {
   ErrorDoggienoteNotCreated,
   ErrorDoggienoteNotFound,
-} from 'error-doggienote';
+} from './../error-doggienote';
 
 @Injectable()
 export class CourseService {
