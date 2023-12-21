@@ -8,9 +8,6 @@ import { jwtConstants } from './constants';
 import { JwtStrategy } from './jwt.strategy';
 import { AuthController } from './auth.controller';
 
-// export const IS_PUBLIC_KEY = 'isPublic';
-// export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);
-
 @Module({
   imports: [
     UserModule,
