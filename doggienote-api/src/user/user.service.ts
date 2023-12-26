@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
-import { ErrorDoggienoteNotCreated } from 'error-doggienote';
+import { ErrorDoggienoteNotCreated } from './../error-doggienote';
 
 @Injectable()
 export class UserService {
