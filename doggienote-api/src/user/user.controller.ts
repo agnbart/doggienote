@@ -1,9 +1,7 @@
-import { Public } from 'auth/auth.service';
+import { Public } from './../auth/auth.service';
 import {
     Controller,
-    Get,
     Post,
-    Logger,
     Body,
   } from '@nestjs/common'
 import { CreateUserDto } from './user-create.dto';

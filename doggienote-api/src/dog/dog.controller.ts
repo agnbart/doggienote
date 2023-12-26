@@ -8,7 +8,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { DogService } from './dog.service';
-import { CreateDogDto } from './dto/create-dog.dt';
+import { CreateDogDto } from './dto/create-dog.dto';
 import { UpdateDogDto } from './dto/update-dog.dto';
 import { FindDogDto } from './dto/find-dog.dto';
 
