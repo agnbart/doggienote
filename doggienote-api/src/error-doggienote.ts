@@ -3,6 +3,7 @@ import { NotFoundException } from '@nestjs/common';
  * Error description
  * ('This dog has activity. It cannot be removed.', 403, 'dn_3')
  * ('This dictActivity cannot be removed', 403, 'dn_4')
+ * ('This email already exist',403, 'dn_6')
  */
 export class ErrorDoggienote {
   readonly message: string;
@@ -28,7 +29,7 @@ export class ErrorDoggienoteNotCreated extends ErrorDoggienote {
   }
 }
 
-export class ErrorDoggieNoteIsEmpty extends ErrorDoggienote {
+export class ErrorDoggienoteIsEmpty extends ErrorDoggienote {
   constructor() {
     super('The field cannot be empty.', 400, 'dn_5');
   }
