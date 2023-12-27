@@ -1,6 +1,4 @@
-export class UpdateDictActivityDto {
-    id: string;
-    dict_activity: string;
-    description: string|null;
-    removable: boolean = false;
-}
+import { PartialType } from "@nestjs/mapped-types";
+import { CreateDictActivityDto } from "./create-dict-activity.dto";
+
+export class UpdateDictActivityDto extends PartialType(CreateDictActivityDto){}

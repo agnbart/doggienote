@@ -1,6 +1,4 @@
-export class FindDictActivityDto {
-  readonly id: string;
-  readonly dict_activity: string;
-  readonly description: string|null;
-  readonly removable: boolean;
-}
+import { PartialType } from "@nestjs/mapped-types";
+import { CreateDictActivityDto } from "./create-dict-activity.dto";
+
+export class FindDictActivityDto extends PartialType(CreateDictActivityDto){}
