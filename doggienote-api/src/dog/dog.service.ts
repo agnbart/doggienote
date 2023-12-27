@@ -9,7 +9,7 @@ import {
   ErrorDoggienoteNotFound,
 } from '../error-doggienote';
 import { FindDogDto } from './dto/find-dog.dto';
-import { CreateDogDto } from './dto/create-dog.dt';
+import { CreateDogDto } from './dto/create-dog.dto';
 
 @Injectable()
 export class DogService {
@@ -30,21 +30,19 @@ export class DogService {
   }
 
   async findOne(id: string): Promise<FindDogDto> {
-    try {
-      const dog = await this.dogRepository.findOne({ where: { id } });
-      return dog;
-    } catch (error) {
+    const dog = await this.dogRepository.findOne({ where: { id } });
+    if (!dog) {
       throw new ErrorDoggienoteNotFound();
     }
+    return dog;
   }
 
   async createDog(createDogDto: CreateDogDto): Promise<Dog> {
-    try {
-      const newDog = this.dogRepository.create(createDogDto);
-      return await this.dogRepository.save(newDog);
-    } catch (error) {
+    const newDog = this.dogRepository.create(createDogDto);
+    if (!newDog) {
       throw new ErrorDoggienoteNotCreated();
     }
+    return await this.dogRepository.save(newDog);
   }
 
   async removeDog(id: string) {
@@ -64,15 +62,14 @@ export class DogService {
   }
 
   async updateDog(id: string, dogData: Partial<Dog>): Promise<Dog> {
-    try {
-      const dogToUpdate = await this.dogRepository.findOneOrFail({
-        where: { id },
-      });
-      const { name, ...rest } = dogData;
-      const updatedDog = Object.assign({}, dogToUpdate, rest);
-      return this.dogRepository.save(updatedDog);
-    } catch (error) {
+    const dogToUpdate = await this.dogRepository.findOneOrFail({
+      where: { id },
+    });
+    const { name, ...rest } = dogData;
+    const updatedDog = Object.assign({}, dogToUpdate, rest);
+    if (!updatedDog) {
       throw new ErrorDoggienoteNotFound();
     }
+    return this.dogRepository.save(updatedDog);
   }
 }

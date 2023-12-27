@@ -1,16 +1,16 @@
-import { Public } from 'auth/auth.service';
+import { Public } from './../auth/auth.service';
 import {
     Controller,
-    Get,
     Post,
-    Logger,
     Body,
+    Logger,
   } from '@nestjs/common'
-import { CreateUserDto } from './user-create.dto';
+import { CreateUserDto } from './create-user.dto';
 import { UserService } from './user.service';
 
 @Controller('user')
 export class UserController {
+  logger = new Logger(UserService.name);
     constructor(
         private readonly userService: UserService
     ){}
@@ -18,7 +18,7 @@ export class UserController {
     @Public()
     @Post()
     async createUser(@Body() createUserDto: CreateUserDto): Promise<string> {
-      const createdUser = this.userService.createUser(createUserDto);
-      return (await createdUser).username;
+      const createdUser = await this.userService.createUser(createUserDto);
+      return createdUser.username;
     }
 }
