@@ -2,7 +2,11 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
-import { ErrorDoggienoteNotCreated } from './../error-doggienote';
+import {
+  ErrorDoggienote,
+  ErrorDoggienoteNotCreated,
+} from './../error-doggienote';
+import { CreateUserDto } from './create-user.dto';
 
 @Injectable()
 export class UserService {
@@ -16,14 +20,18 @@ export class UserService {
     return this.userRepository.findOne({ where: { username } });
   }
 
-  async createUser(userData: Partial<User>): Promise<User> {
-    try {
-      const newUser = this.userRepository.create(userData);
-      await this.userRepository.save(newUser);
-      return newUser;
-    } catch (error) {
-      this.logger.error('Błąd przy tworzeniu użytkownika', error.stack);
+  async createUser(userDataDto: CreateUserDto): Promise<User> {
+    const existedUser = await this.findOne(userDataDto.username);
+    if (existedUser) {
+      throw new ErrorDoggienote('This email already exist', 403, 'dn_6');
+    }
+  
+    const newUser = this.userRepository.create(userDataDto);
+    await this.userRepository.save(newUser);
+    if (!newUser) {
+      this.logger.error('Error creating user');
       throw new ErrorDoggienoteNotCreated();
     }
+    return newUser;
   }
 }

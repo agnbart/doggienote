@@ -6,6 +6,7 @@ import {
   UnauthorizedException,
   Logger,
   NotFoundException,
+  BadRequestException,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { ErrorDoggienote } from './error-doggienote';
@@ -36,6 +37,11 @@ export class ErrorFilter implements ExceptionFilter {
         status = 404;
         message = 'Not found';
         error = 'NotFoundError';
+        break;
+      case exception instanceof BadRequestException:
+        status = 400;
+        message = 'Bad Request';
+        error = 'BadRequestError';
         break;
       default:
         status = HttpStatus.INTERNAL_SERVER_ERROR;
