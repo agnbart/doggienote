@@ -1,0 +1,31 @@
+<div
+  class="max-w-lg mx-auto bg-white rounded-3xl shadow-md overflow-hidden md:max-w-2xl m-4"
+>
+  <div class="md:flex">
+    <div class="md:flex-shrink-0">
+      <img
+        class="w-full h-full object-cover md:w-52"
+        [src]="imgSrc"
+        alt="An image"
+      />
+    </div>
+    <div class="p-8">
+      <!-- <div
+        class="uppercase tracking-wide text-sm text-indigo-500 font-semibold"
+      >
+        Card header
+      </div> -->
+      @if(title)
+      {<p
+        class="block mt-1 text-3xl leading-tight font-medium text-black"
+      >
+        {{title}}
+      </p>}
+      @if (content) {
+      <p class="mt-2 text-gray-500">
+        {{ content }}
+      </p>
+      }
+    </div>
+  </div>
+</div>
