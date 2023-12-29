@@ -1,3 +1,14 @@
 .vertpan img {
     transition: margin 1s ease;
 }
+
+.dropdown-menu {
+    transform: scale(0.60);
+    opacity: 0;
+    transition: transform 0.2s ease-out, opacity 0.2s ease-out;
+}
+
+.dropdown-menu.active {
+    transform: scale(1);
+    opacity: 1;
+}
