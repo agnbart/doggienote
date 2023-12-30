@@ -1,0 +1,11 @@
+{
+  "locale": "en-US",
+  "translations": {
+    "Features": "Features",
+    "840692109692540367": "Sign In",
+    "2911051817423563845": "View notifications",
+    "3496181279436331299": "Your Profile",
+    "4930506384627295710": "Settings",
+    "8553909445213121427": "{$START_TAG_SPAN}Sign out{$CLOSE_TAG_SPAN}"
+  }
+}
