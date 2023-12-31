@@ -6,6 +6,7 @@ export class DictActivity {
   id: string;
 
   @Column({
+    unique: true,
     length: 15,
   })
   dict_activity: string;

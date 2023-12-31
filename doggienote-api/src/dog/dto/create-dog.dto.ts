@@ -1,16 +1,16 @@
-import { IsNotEmpty, Length } from 'class-validator';
+import { IsEmpty, IsNotEmpty, IsOptional } from 'class-validator';
 
 export class CreateDogDto {
   @IsNotEmpty()
-  @Length(2)
   name: string;
 
+  @IsOptional()
   kennel_name: string | null;
+
+  @IsOptional()
   official_name: string | null;
 
-  @IsNotEmpty()
-  date_of_birth: Date;
-
+  @IsOptional()
   height_category: string | null;
 
   @IsNotEmpty()

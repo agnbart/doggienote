@@ -47,7 +47,8 @@ export class ErrorFilter implements ExceptionFilter {
         status = HttpStatus.INTERNAL_SERVER_ERROR;
         message = 'Internal Server Error';
         error = 'InternalError';
-        this.logger.error(exception);
+        const exc = exception as BadRequestException
+        this.logger.error(exc.stack);
         break;
     }
 

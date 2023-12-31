@@ -3,15 +3,18 @@ import {
   Controller,
   Delete,
   Get,
+  Logger,
   Param,
   Patch,
   Post,
 } from '@nestjs/common';
 import { DogService } from './dog.service';
-import { CreateDogDto } from './dto/create-dog.dto';
 import { UpdateDogDto } from './dto/update-dog.dto';
 import { FindDogDto } from './dto/find-dog.dto';
+import { CreateDogDto } from './dto/create-dog.dto';
+import { Public } from 'auth/auth.service';
 
+@Public()
 @Controller('dogs')
 export class DogController {
   constructor(private readonly dogService: DogService) {}
@@ -28,13 +31,15 @@ export class DogController {
   }
 
   @Delete(':id')
-  async removeDog(@Param('id') id: string) {
+  async removeDog(@Param('id') id: string): Promise<string> {
     await this.dogService.removeDog(id);
+    return id;
   }
 
   @Post()
-  async createDog(@Body() createDogDto: CreateDogDto): Promise<CreateDogDto> {
-    return await this.dogService.createDog(createDogDto);
+  async createDog(@Body() createDogDto: CreateDogDto): Promise<string> {
+    const newDog = await this.dogService.createDog(createDogDto);
+    return newDog.id;
   }
 
   @Patch(':id')
@@ -42,7 +47,6 @@ export class DogController {
     @Param('id') id: string,
     @Body() updateDogDto: UpdateDogDto,
   ): Promise<UpdateDogDto> {
-    const dog = await this.dogService.updateDog(id, updateDogDto);
-    return dog;
+    return await this.dogService.updateDog(id, updateDogDto);
   }
 }

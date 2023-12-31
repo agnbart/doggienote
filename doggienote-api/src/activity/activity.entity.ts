@@ -15,7 +15,7 @@ export class Activity {
   })
   id_dict_activity: string;
 
-  @Column({ type: 'date', default: () => 'CURRENT_DATE' })
+  @Column({ type: 'date'})
   date_of_activity: Date;
 
   @Column({

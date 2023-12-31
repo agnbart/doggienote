@@ -29,48 +29,54 @@ export class ActivityService {
   }
 
   async findOne(id: string): Promise<FindActivityDto> {
-    try {
-      const activity = await this.activityRepository.findOne({ where: { id } });
-      return activity;
-    } catch (error) {
+    const activity = await this.activityRepository.findOne({ where: { id } });
+    if (!activity) {
       throw new ErrorDoggienoteNotFound();
     }
+    return activity;
   }
 
-  async findByIdDog(id_dog: string): Promise<FindActivityDto> {
-    try {
-      const foundDog = await this.activityRepository.findOne({
-        where: { id_dog },
-      });
-      return foundDog;
-    } catch (error) {
+  async findByIdDog(id_dog: string): Promise<FindActivityDto[]> {
+    const foundDog = await this.activityRepository.find({
+      where: { id_dog },
+    });
+    if (!foundDog || !Array.isArray(foundDog) || foundDog.length === 0) {
       throw new ErrorDoggienoteNotFound();
     }
+    return foundDog;
   }
 
   async findByIdDictActivity(
     id_dict_activity: string,
   ): Promise<FindActivityDto> {
-    try {
-      const foundDictActivity = await this.activityRepository.findOne({
-        where: { id_dict_activity },
-      });
-      return foundDictActivity;
-    } catch (error) {
+    const foundDictActivity = await this.activityRepository.findOne({
+      where: { id_dict_activity },
+    });
+    if (!foundDictActivity) {
       throw new ErrorDoggienoteNotFound();
     }
+    return foundDictActivity;
   }
 
-  async createActivity(
-    activityCreateDto: CreateActivityDto,
-  ): Promise<CreateActivityDto> {
-    try {
-      const newActivity =
-        await this.activityRepository.create(activityCreateDto);
-      return await this.activityRepository.save(newActivity);
-    } catch (error) {
+  async findByDogByIdDictActivity(
+    id_dog: string,
+    id_dict_activity: string,
+  ): Promise<FindActivityDto[]> {
+    const foundDogDictActivity = await this.activityRepository.find({
+      where: { id_dog, id_dict_activity },
+    });
+    if (!foundDogDictActivity) {
+      throw new ErrorDoggienoteNotFound();
+    }
+    return foundDogDictActivity;
+  }
+
+  async createActivity(activityCreateDto: CreateActivityDto) {
+    const newActivity = await this.activityRepository.create(activityCreateDto);
+    if (!newActivity) {
       throw new ErrorDoggienoteNotCreated();
     }
+    return await this.activityRepository.save(newActivity);
   }
 
   async removeActivity(id: string) {

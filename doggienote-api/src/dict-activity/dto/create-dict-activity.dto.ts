@@ -1,13 +1,14 @@
-import { IsNotEmpty, Length } from "class-validator";
+import { IsBoolean, IsNotEmpty, IsOptional, Length } from "class-validator";
 
 export class CreateDictActivityDto {
-  id: string;
-
   @IsNotEmpty()
   @Length(3)
   dict_activity: string;
 
+  @IsOptional()
   description: string|null;
 
+  @IsNotEmpty()
+  @IsBoolean()
   removable: boolean = false;
 }

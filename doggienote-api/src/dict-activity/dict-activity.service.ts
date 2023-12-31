@@ -5,7 +5,6 @@ import { DictActivity } from './dict-activity.entity';
 import { ActivityService } from './../activity/activity.service';
 import {
   ErrorDoggienote,
-  ErrorDoggienoteNotCreated,
   ErrorDoggienoteNotFound,
 } from '../error-doggienote';
 import { FindDictActivityDto } from './dto/find-dict-activity.dto';
@@ -17,7 +16,7 @@ export class DictActivityService {
   constructor(
     @InjectRepository(DictActivity)
     private dictActivityRepository: Repository<DictActivity>,
-    private activityServis: ActivityService,
+    private activityService: ActivityService,
   ) {}
 
   async findAll(): Promise<FindDictActivityDto[]> {
@@ -30,71 +29,68 @@ export class DictActivityService {
   }
 
   async findOne(id: string): Promise<FindDictActivityDto> {
-    try {
-      const dictActivity = await this.dictActivityRepository.findOneOrFail({
-        where: { id },
-      });
-      return dictActivity;
-    } catch (error) {
+    const dictActivity = await this.dictActivityRepository.findOneOrFail({
+      where: { id },
+    });
+    if (!dictActivity) {
       throw new ErrorDoggienoteNotFound();
     }
+    return dictActivity;
   }
 
-  async createDictActivity(
-    dictActivityDto: CreateDictActivityDto,
-  ): Promise<CreateDictActivityDto> {
-    try {
-      const newDictActivity =
-        this.dictActivityRepository.create(dictActivityDto);
-      return await this.dictActivityRepository.save(newDictActivity);
-    } catch (error) {
-      throw new ErrorDoggienoteNotCreated();
+  async createDictActivity(dictActivityDto: CreateDictActivityDto) {
+    const existingActivity = await this.dictActivityRepository.findOne({
+      where: { dict_activity: dictActivityDto.dict_activity },
+    });
+    if (existingActivity) {
+      throw new ErrorDoggienote(
+        'This dict-activity already exists. You cannot add the same.',
+        403,
+        'dn_7',
+      );
     }
+    const newDictActivity = this.dictActivityRepository.create(dictActivityDto);
+    return await this.dictActivityRepository.save(newDictActivity);
   }
 
   async updateActivity(
     id: string,
-    updateDictActivityDto: Partial<UpdateDictActivityDto>,
-  ): Promise<DictActivity> {
-    try {
-      const dictActivityToUpdate =
-        await this.dictActivityRepository.findOneOrFail({
-          where: { id },
-        });
-      const { dict_activity, ...rest } = updateDictActivityDto;
-      const updatedDictActivity = Object.assign({}, dictActivityToUpdate, rest);
-      return this.dictActivityRepository.save(updatedDictActivity);
-    } catch (error) {
+    updateDictActivityDto: UpdateDictActivityDto,
+  ): Promise<UpdateDictActivityDto> {
+    const dictActivityToUpdate =
+      await this.dictActivityRepository.findOneOrFail({
+        where: { id },
+      });
+
+    if (!dictActivityToUpdate) {
       throw new ErrorDoggienoteNotFound();
     }
+    const { dict_activity, removable, ...rest } = updateDictActivityDto;
+    const updatedDictActivity = Object.assign(dictActivityToUpdate, rest);
+    return this.dictActivityRepository.save(updatedDictActivity);
   }
 
   async deleteDictActivity(id: string) {
     const dictActivityToDelete = await this.dictActivityRepository.findOne({
       where: { id },
     });
-    if (dictActivityToDelete === null) {
+    if (!dictActivityToDelete) {
       throw new ErrorDoggienoteNotFound();
-    } else {
-      if (dictActivityToDelete.removable === false) {
-        throw new ErrorDoggienote(
-          'This dictActivity cannot be removed',
-          403,
-          'dn_4',
-        );
-      } else {
-        if (dictActivityToDelete.removable === true) {
-          if (await this.activityServis.findByIdDictActivity(id)) {
-            throw new ErrorDoggienote(
-              'This dictActivity is used in Activity database. It cannot be removed.',
-              403,
-              'dn_3',
-            );
-          } else {
-            await this.dictActivityRepository.delete(id);
-          }
-        }
-      }
     }
+    if (!dictActivityToDelete.removable) {
+      throw new ErrorDoggienote(
+        'This dictActivity cannot be removed',
+        403,
+        'dn_4',
+      );
+    }
+    if (await this.activityService.findByIdDictActivity) {
+      throw new ErrorDoggienote(
+        'This dictActivity is used in Activity database. It cannot be removed.',
+        403,
+        'dn_3',
+      );
+    }
+    await this.dictActivityRepository.delete(id);
   }
 }
