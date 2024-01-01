@@ -13,7 +13,9 @@ import { UpdateDogDto } from './dto/update-dog.dto';
 import { FindDogDto } from './dto/find-dog.dto';
 import { CreateDogDto } from './dto/create-dog.dto';
 import { Public } from 'auth/auth.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('dogs')
 @Controller('dogs')
 export class DogController {
   constructor(private readonly dogService: DogService) {}

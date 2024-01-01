@@ -13,7 +13,9 @@ import { FindActivityDto } from './dto/find-activity.dto';
 import { CreateActivityDto } from './dto/create-activity.dto';
 import { UpdateActivityDto } from './dto/update-activity.dt';
 import { Public } from 'auth/auth.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('activities')
 @Controller('activities')
 export class ActivityController {
   private readonly logger = new Logger();
