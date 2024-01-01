@@ -3,6 +3,7 @@ import { CompetitionService } from './competition.service';
 import { Competition } from './competition.entity';
 import { IsEmpty } from 'class-validator';
 import { CompetitionValidation } from './competition.validation';
+import { ApiExcludeController } from '@nestjs/swagger';
 
 // export class CreateCompetitionDto{
 //     @IsEmpty()
@@ -12,7 +13,7 @@ import { CompetitionValidation } from './competition.validation';
 //     competition_country: string;
 // }
 
-
+@ApiExcludeController()
 @Controller('competition')
 export class CompetitionController {
   logger = new Logger(CompetitionController.name);

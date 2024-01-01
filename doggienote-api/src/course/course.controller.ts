@@ -1,7 +1,9 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { CourseService } from './course.service';
 import { Course } from './course.entity';
+import { ApiExcludeController } from '@nestjs/swagger';
 
+@ApiExcludeController()
 @Controller('course')
 export class CourseController {
   constructor(private readonly courseService: CourseService) {}

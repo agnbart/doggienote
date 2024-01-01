@@ -7,7 +7,9 @@ import {
   } from '@nestjs/common'
 import { CreateUserDto } from './create-user.dto';
 import { UserService } from './user.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('user')
 @Controller('user')
 export class UserController {
   logger = new Logger(UserService.name);
