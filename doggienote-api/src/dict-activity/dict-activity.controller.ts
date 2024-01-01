@@ -13,7 +13,6 @@ import { CreateDictActivityDto } from './dto/create-dict-activity.dto';
 import { UpdateDictActivityDto } from './dto/update-dict-activity.dto';
 import { Public } from 'auth/auth.service';
 
-@Public()
 @Controller('dict-activity')
 export class DictActivityController {
   constructor(private readonly dictActivityService: DictActivityService) {}

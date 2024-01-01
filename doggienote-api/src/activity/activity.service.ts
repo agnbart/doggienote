@@ -80,14 +80,13 @@ export class ActivityService {
   }
 
   async removeActivity(id: string) {
-    try {
-      const removedActivity = await this.activityRepository.find({
-        where: { id },
-      });
-      await this.activityRepository.delete(id);
-    } catch (error) {
+    const removedActivity = await this.activityRepository.find({
+      where: { id },
+    });
+    if (!removedActivity) {
       throw new ErrorDoggienoteNotFound();
     }
+    await this.activityRepository.delete(id);
   }
 
   async updateActivity(

@@ -14,7 +14,6 @@ import { CreateActivityDto } from './dto/create-activity.dto';
 import { UpdateActivityDto } from './dto/update-activity.dt';
 import { Public } from 'auth/auth.service';
 
-@Public()
 @Controller('activities')
 export class ActivityController {
   private readonly logger = new Logger();
@@ -53,8 +52,9 @@ export class ActivityController {
   }
 
   @Delete(':id')
-  async removeActivity(@Param('id') id: string) {
-    return await this.activityService.removeActivity(id);
+  async removeActivity(@Param('id') id: string): Promise<string> {
+    await this.activityService.removeActivity(id);
+    return id;
   }
 
   @Patch(':id')

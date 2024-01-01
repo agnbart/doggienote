@@ -3,10 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { DictActivity } from './dict-activity.entity';
 import { ActivityService } from './../activity/activity.service';
-import {
-  ErrorDoggienote,
-  ErrorDoggienoteNotFound,
-} from '../error-doggienote';
+import { ErrorDoggienote, ErrorDoggienoteNotFound } from '../error-doggienote';
 import { FindDictActivityDto } from './dto/find-dict-activity.dto';
 import { CreateDictActivityDto } from './dto/create-dict-activity.dto';
 import { UpdateDictActivityDto } from './dto/update-dict-activity.dto';
@@ -74,6 +71,7 @@ export class DictActivityService {
     const dictActivityToDelete = await this.dictActivityRepository.findOne({
       where: { id },
     });
+
     if (!dictActivityToDelete) {
       throw new ErrorDoggienoteNotFound();
     }
@@ -84,13 +82,14 @@ export class DictActivityService {
         'dn_4',
       );
     }
-    if (await this.activityService.findByIdDictActivity) {
+    if (await this.activityService.findByIdDictActivity(id)) {
       throw new ErrorDoggienote(
         'This dictActivity is used in Activity database. It cannot be removed.',
         403,
         'dn_3',
       );
     }
+
     await this.dictActivityRepository.delete(id);
   }
 }

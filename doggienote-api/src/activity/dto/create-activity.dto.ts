@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsOptional } from "class-validator";
+import { IsBoolean, IsNotEmpty, IsOptional } from "class-validator";
 
 export class CreateActivityDto {
   @IsNotEmpty()
@@ -10,9 +10,13 @@ export class CreateActivityDto {
   @IsOptional()
   date_of_activity: Date | null;
   
-  @IsNotEmpty()
+  @IsOptional()
   description: string;
 
   @IsOptional()
   activity_duration: number | null;
+
+  @IsNotEmpty()
+  @IsBoolean()
+  done: boolean = true;
 }

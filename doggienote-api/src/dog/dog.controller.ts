@@ -14,7 +14,6 @@ import { FindDogDto } from './dto/find-dog.dto';
 import { CreateDogDto } from './dto/create-dog.dto';
 import { Public } from 'auth/auth.service';
 
-@Public()
 @Controller('dogs')
 export class DogController {
   constructor(private readonly dogService: DogService) {}
