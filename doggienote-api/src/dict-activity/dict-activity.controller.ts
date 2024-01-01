@@ -11,6 +11,7 @@ import { DictActivityService } from './dict-activity.service';
 import { FindDictActivityDto } from './dto/find-dict-activity.dto';
 import { CreateDictActivityDto } from './dto/create-dict-activity.dto';
 import { UpdateDictActivityDto } from './dto/update-dict-activity.dto';
+import { Public } from 'auth/auth.service';
 
 @Controller('dict-activity')
 export class DictActivityController {
@@ -23,14 +24,18 @@ export class DictActivityController {
 
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<FindDictActivityDto> {
-    return await this.dictActivityService.findOne(id);
+    const dictActivity = await this.dictActivityService.findOne(id);
+    return dictActivity;
   }
 
   @Post()
   async createDictActivity(
-    @Body() createDictActivityDto:CreateDictActivityDto,
-  ): Promise<CreateDictActivityDto> {
-    return await this.dictActivityService.createDictActivity(createDictActivityDto);
+    @Body() createDictActivityDto: CreateDictActivityDto,
+  ): Promise<string> {
+    const newDictActivity = await this.dictActivityService.createDictActivity(
+      createDictActivityDto,
+    );
+    return newDictActivity.id;
   }
 
   @Patch(':id')
@@ -38,15 +43,15 @@ export class DictActivityController {
     @Param('id') id: string,
     @Body() updateDictActivityDto: UpdateDictActivityDto,
   ): Promise<UpdateDictActivityDto> {
-    const dictActivity = await this.dictActivityService.updateActivity(
+    return await this.dictActivityService.updateActivity(
       id,
       updateDictActivityDto,
     );
-    return dictActivity;
   }
 
   @Delete(':id')
   async deleteDictActivity(@Param('id') id: string) {
-    return this.dictActivityService.deleteDictActivity(id);
+    await this.dictActivityService.deleteDictActivity(id);
+    return id;
   }
 }

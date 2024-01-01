@@ -15,8 +15,12 @@ export class Activity {
   })
   id_dict_activity: string;
 
-  @Column({ type: 'date', default: () => 'CURRENT_DATE' })
-  date_of_activity: Date;
+  @Column({
+    type: 'date',
+    default: null,
+    nullable: true
+  })
+  date_of_activity: Date | null;
 
   @Column({
     type: 'text',
@@ -26,4 +30,9 @@ export class Activity {
 
   @Column({ type: 'float', precision: 4, scale: 2 })
   activity_duration: number | null;
+
+  @Column({
+    default: true
+  })
+  done: boolean;
 }

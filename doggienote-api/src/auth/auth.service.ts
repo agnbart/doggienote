@@ -1,5 +1,6 @@
 import { Injectable, Logger, SetMetadata } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
 import { UserService } from './../user/user.service';
 
 export const IS_PUBLIC_KEY = 'isPublic';
@@ -15,7 +16,7 @@ export class AuthService {
 
   async validateUser(username: string, password: string): Promise<any> {
     const user = await this.userService.findOne(username);
-    if (user && user.password === password) {
+    if (user && await bcrypt.compare(password, user.password)) {
       const { password, ...result } = user;
       return result;
     }

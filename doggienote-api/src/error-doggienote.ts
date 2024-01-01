@@ -4,6 +4,7 @@ import { NotFoundException } from '@nestjs/common';
  * ('This dog has activity. It cannot be removed.', 403, 'dn_3')
  * ('This dictActivity cannot be removed', 403, 'dn_4')
  * ('This email already exist',403, 'dn_6')
+ * ('This dict-activity already exist. You can not add the same.', 403, 'dn_7')
  */
 export class ErrorDoggienote {
   readonly message: string;

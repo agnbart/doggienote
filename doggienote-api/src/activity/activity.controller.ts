@@ -12,18 +12,20 @@ import { ActivityService } from './activity.service';
 import { FindActivityDto } from './dto/find-activity.dto';
 import { CreateActivityDto } from './dto/create-activity.dto';
 import { UpdateActivityDto } from './dto/update-activity.dt';
+import { Public } from 'auth/auth.service';
 
-@Controller('activity')
+@Controller('activities')
 export class ActivityController {
   private readonly logger = new Logger();
 
   constructor(private readonly activityService: ActivityService) {}
 
-  @Get('byDictActivity/:id_dict_activity')
-  async findByIdDictActivity(
-    @Param('id_dict_activity') id_dict_activity: string,
-  ): Promise<FindActivityDto> {
-    return await this.activityService.findByIdDictActivity(id_dict_activity);
+  @Get('byDog/:id_dog/byDictActivity/:id_dict_activity')
+  async findByDogByIdDictActivity(
+    @Param('id_dog') id_dog: string,
+    @Param('id_dict_activity') id_dict_activity: string
+  ): Promise<FindActivityDto[]> {
+    return await this.activityService.findByDogByIdDictActivity(id_dog, id_dict_activity);
   }
 
   @Get(':id')
@@ -38,20 +40,21 @@ export class ActivityController {
   }
 
   @Get('byDog/:id_dog')
-  async findByIdDog(@Param('id_dog') id_dog: string): Promise<FindActivityDto> {
+  async findByIdDog(@Param('id_dog') id_dog: string): Promise<FindActivityDto[]>{
     return await this.activityService.findByIdDog(id_dog);
   }
 
   @Post()
   async createActivity(
     @Body() createActivityDto: CreateActivityDto,
-  ): Promise<CreateActivityDto> {
+  ) {
     return await this.activityService.createActivity(createActivityDto);
   }
 
   @Delete(':id')
-  async removeActivity(@Param('id') id: string) {
-    return await this.activityService.removeActivity(id);
+  async removeActivity(@Param('id') id: string): Promise<string> {
+    await this.activityService.removeActivity(id);
+    return id;
   }
 
   @Patch(':id')
@@ -63,6 +66,7 @@ export class ActivityController {
       id,
       updateActivityDto,
     );
+    this.logger.log(activity)
     return activity;
   }
 }
