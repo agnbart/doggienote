@@ -6,14 +6,17 @@
   <body class="h-full">
   ```
 -->
-<div class="min-h-full">
+<div class="min-h-full bg-gray-800">
   <div class="bg-gray-800">
-    <nav class="relative z-50 bg-gray-800">
+    <nav
+      id="nav-desktop"
+      class="top-0 h-16 z-50 w-full bg-gray-800 opacity-85 fixed backdrop-blur-lg"
+    >
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div
           class="flex h-16 items-center justify-between border-b border-gray-700 border-solid"
         >
-          <div class="flex items-center">
+          <div id="desktop-menu-items" class="flex items-center blur-none">
             <div class="flex-shrink-0">
               <img
                 class="h-8 w-8"
@@ -26,27 +29,28 @@
                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                 <a
                   href="#"
+                  role="button"
                   class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
                   aria-current="page"
                   i81n="@@MenuStart"
                   >Start</a
                 >
                 <a
-                  href="#"
+                  href="#features"
                   class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
                   i18n="@@Features"
-                  >Features</a
+                  >Możliwości</a
                 >
                 <a
-                  href="#"
+                  href="#qAndA"
                   class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
                   i18n="@@QuestionsAndAnswers"
-                  >Questions and Answers</a
+                  >Pytania i odpowiedzi</a
                 >
               </div>
             </div>
           </div>
-          <div class="hidden md:block">
+          <div id="desktop-user-menu" class="hidden md:block">
             <div class="ml-4 flex items-center md:ml-6">
               @if(!isAuthUser) {
               <!-- Sign In-->
@@ -59,7 +63,7 @@
                 <span
                   class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
                   i18n="@@SignIn"
-                  >Sign In</span
+                  >Zaloguj się</span
                 >
               </div>
               } @else {
@@ -115,7 +119,7 @@
                 -->
                 <!-- @if (isActiveUserMenu) { -->
                 <div
-                  class="dropdown-menu absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  class="dropdown-menu absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-gray-900 py-1 shadow-lg ring-1 ring-black ring-opacity-100 focus:outline-none"
                   role="menu"
                   aria-orientation="vertical"
                   aria-labelledby="user-menu-button"
@@ -125,31 +129,31 @@
                   <!-- Active: "bg-gray-100", Not Active: "" -->
                   <a
                     href="#"
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
+                    class="block px-4 py-2 text-sm text-gray-100 hover:bg-gray-700"
                     role="menuitem"
                     tabindex="-1"
                     id="user-menu-item-0"
                     i18n="@@YourProfile"
-                    >Your Profile</a
+                    >Twój profil</a
                   >
                   <a
                     href="#"
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
+                    class="block px-4 py-2 text-sm text-gray-100 hover:bg-gray-700"
                     role="menuitem"
                     tabindex="-1"
                     id="user-menu-item-1"
                     i18n="@@Settings"
-                    >Settings</a
+                    >Twoje ustawienia</a
                   >
                   <div
                     role="button"
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
+                    class="block px-4 py-2 text-sm text-gray-100 hover:bg-gray-700"
                     tabindex="-1"
                     id="user-sign-out"
                     (click)="SingOutClicked()"
                     i18n="@@SignOut"
                   >
-                    <span>Sign out</span>
+                    <span>Wyloguj się</span>
                   </div>
                 </div>
                 <!-- } -->
@@ -163,8 +167,8 @@
               DoggieNote
             </p>
           </div>
-          <div class="-mr-2 flex md:hidden">
-            <!-- Mobile menu button -->
+          <!-- Mobile menu button -->
+          <div id="mobile-menu" class="-mr-2 flex md:hidden">
             <button
               type="button"
               id="mobile-menu-buton"
@@ -209,170 +213,265 @@
           </div>
         </div>
       </div>
-
-      <!-- Mobile menu, show/hide based on menu state. -->
-      @if (isActiveMobileMenu) {
-      <div class="md:hidden" id="mobile-menu">
-        <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-          <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-          <a
-            href="#"
-            class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
-            aria-current="page"
-            i81n="@@MenuStart"
-            >Start</a
-          >
-          <a
-            href="#"
-            class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-            i18n="@@Features"
-            >Features</a
-          >
-          <a
-            href="#"
-            class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-            i18n="@@QuestionsAndAnswers"
-            >Questions and Answers</a
-          >
-        </div>
-        <div class="border-t border-gray-700 pb-3 pt-4">
-          <div class="flex items-center px-5">
-            <div class="flex-shrink-0">
-              <img
-                class="h-10 w-10 rounded-full"
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                alt=""
-              />
-            </div>
-            <div class="ml-3">
-              <div class="text-base font-medium leading-none text-white">
-                Tom Cook
-              </div>
-              <div class="text-sm font-medium leading-none text-gray-400">
-                email
-              </div>
-            </div>
-            <button
-              type="button"
-              class="relative ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-            >
-              <span class="absolute -inset-1.5"></span>
-              <svg
-                class="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
-                />
-              </svg>
-            </button>
-          </div>
-          <div class="mt-3 space-y-1 px-2">
-            <a
-              href="#"
-              class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-              i18n="@@YourProfile"
-              >Your Profile</a
-            >
-            <a
-              href="#"
-              class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-              i18n="@@Settings"
-              >Settings</a
-            >
-            <div
-              role="button"
-              class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-              tabindex="-1"
-              id="user-sign-out"
-              (click)="SingOutClicked()"
-              i18n="@@SignOut"
-            >
-              <span>Sign out</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      }
     </nav>
 
-    <header class="bg-gray-800 pb-10 hidden md:flex">
-      <div class="relative z-50 max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        <h1 class="text-7xl font-bold tracking-tight text-white">DoggieNote</h1>
+    <!-- <nav id="nav-mobile"> -->
+    <!-- Mobile menu, show/hide based on menu state. -->
+    @if (isActiveMobileMenu) {
+    <div class="md:hidden relative top-16" id="mobile-menu-items">
+      <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
+        <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+        <a
+          href="#"
+          class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
+          aria-current="page"
+          i81n="@@MenuStart"
+          >Start</a
+        >
+        <a
+          href="#features"
+          class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+          i18n="@@Features"
+          >Możliwości</a
+        >
+        <a
+          href="#qAndA"
+          class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+          i18n="@@QuestionsAndAnswers"
+          >Pytania i odpowiedzi</a
+        >
       </div>
-    </header>
-  </div>
-  <main class="relative flex" id="main">
-    <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 relative hover:z-10">
-      <!-- Your content -->
-      <div
-        class="grid grid-cols-1 grid-rows-1 gap-8 bg-gray-100 md:grid-cols-2"
-      >
-        <div>
-          <h2 class="text-4xl font-bold text-gray-900">Test</h2>
-          <p class="mt-5 mb-5">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod
-            eu lorem et ultricies. In porta lorem at dui semper, sit amet ornare
-            nisl ullamcorper. Aliquam ut aliquet lacus. In tristique, justo eget
-            tristique iaculis, lacus justo aliquam ante, vitae laoreet lacus
-            eros nec arcu.
-          </p>
-          <div class="flex gap-6">
-            <dg-button i18n="@@SignIn">Sign in</dg-button>
-            <dg-button-outlined i18n="@@SignUp">Sign up</dg-button-outlined>
+      <div class="border-t border-gray-700 pb-3 pt-4">
+        <div class="flex items-center px-5">
+          <div class="flex-shrink-0">
+            <img
+              class="h-10 w-10 rounded-full"
+              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+              alt=""
+            />
           </div>
-
-          <!-- <button class="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-base px-8 py-3 rounded-full shadow-md hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
-            <i class="fas fa-heart"></i>
-          </button> -->
-        </div>
-        <img
-          id="landing-p-pumi"
-          src="../../assets/images/landing-p-pumi.jpg"
-          alt="landing page pumi image"
-          class="relative -mt-32 rounded-3xl w-full"
-        />
-      </div>
-
-      <div
-        class="grid grid-cols-1 grid-rows-2 gap-8 bg-gray-100 md:grid-cols-2"
-      >
-        <dg-card imgSrc="../../assets/images/fit-w-pumi.png"></dg-card>
-        <dg-card imgSrc="../../assets/images/vet-w-pumi.png"></dg-card>
-        <dg-card imgSrc="../../assets/images/walk-w-pumi.png"></dg-card>
-        <dg-card
-          imgSrc="../../assets/images/jump-w-pumi.png"
-          title="Agility"
-          content="Agility jest fajne. Można sobie pobiegać i poskakać. I jeszcze, czasami zająć pierwsze miejsce."
-        ></dg-card>
-        <div>
-          <div class="max-w-lg mx-auto p-8">
-            <details
-              class="open:bg-white dark:open:bg-slate-900 open:ring-1 open:ring-black/5 dark:open:ring-white/10 open:shadow-lg p-6 rounded-3xl"
+          <div class="ml-3">
+            <div class="text-base font-medium leading-none text-white">
+              Tom Cook
+            </div>
+            <div class="text-sm font-medium leading-none text-gray-400">
+              email
+            </div>
+          </div>
+          <button
+            type="button"
+            class="relative ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+          >
+            <span class="absolute -inset-1.5"></span>
+            <svg
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              aria-hidden="true"
             >
-              <summary
-                class="text-sm leading-6 text-slate-900 dark:text-white font-semibold select-none"
-              >
-                Why do they call it Ovaltine?
-              </summary>
-              <div
-                class="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400"
-              >
-                <p>
-                  The mug is round. The jar is round. They should call it
-                  Roundtine.
-                </p>
-              </div>
-            </details>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="mt-3 space-y-1 px-2">
+          <a
+            href="#"
+            class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+            i18n="@@YourProfile"
+            >Twój profil</a
+          >
+          <a
+            href="#"
+            class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+            i18n="@@Settings"
+            >Twoje ustawienia</a
+          >
+          <div
+            role="button"
+            class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+            tabindex="-1"
+            id="user-sign-out"
+            (click)="SingOutClicked()"
+            i18n="@@SignOut"
+          >
+            <span>Wyloguj się</span>
           </div>
         </div>
       </div>
+    </div>
+    }
+    <!-- </nav> -->
+  </div>
+  <header class="relative top-14 flex flex-col bg-gray-800">
+    <!-- <div
+        class="max-w-7x bg-gray-800 px-4 pb-36 sm:px-6 lg:px-8"
+      > -->
+    <div class="bg-gray-800">
+      <div
+        class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center m-4 pb-8"
+      >
+        <div class="mr-8">
+          <h1 class="text-7xl font-bold tracking-tight text-gray-100 py-8">
+            DoggieNote
+          </h1>
+          <p class="text-2xl text-gray-100">
+            Czy trenujesz na zawody, czy po prostu cieszysz się jakością
+            spędzanego czasu ze swoim futrzanym przyjacielem, DoggieNote jest
+            idealnym towarzyszem dla Ciebie.
+          </p>
+          <h2 class="text-4xl font-bold text-gray-400 z-50 py-8">
+            Zapamiętaj każdą cenną chwilę ze swoim psem - dołącz do DoggieNote
+            już dziś!
+          </h2>
+          <div class="pb-8">
+            <dg-button-outlined i18n="@@SignUp" class="text-gray-100"
+              >Dołącz do nas</dg-button-outlined
+            >
+          </div>
+        </div>
+        <div class="pb-10">
+          <img
+            id="landing-p-pumi"
+            src="../../assets/images/landing-p-pumi.jpg"
+            alt="landing page pumi image"
+            class="rounded-3xl w-fit"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="bg-gray-800 px-4 pb-36 sm:px-6 lg:px-8">
+        <h2 class="text-4xl font-bold text-gray-400 z-50">
+          Zapamiętaj każdą cenną chwilę ze swoim psem - dołącz do DoggieNote
+          już dziś!
+        </h2>>
+      </div> -->
+  </header>
+
+  <!-- Your content -->
+  <main class="relative" id="main">
+    <div class="flex flex-col">
+      <section
+        class="bg-gray-100 p-4 sm:p-6 lg:p-8 flex justify-center text-2xl"
+      >
+        <div
+          class="max-w-7xl grid grid-cols-1 grid-rows-1 gap-8 md:grid-cols-2"
+        >
+          <p class="mt-5 mb-5">
+            DoggieNote jest zaprojektowany dla wszystkich, którzy uwielbiają
+            spędzać czas ze swoimi psami, czy jesteś entuzjastą sportu, czy
+            zwykłym właścicielem zwierzęcia.
+          </p>
+          <p class="mt-5 mb-5">
+            Dzięki DoggieNote możesz planować, opisywać i modyfikować swoje
+            aktywności na podstawie statystyk w czasie rzeczywistym, zapewniając
+            doświadczenie dostosowane do Ciebie i Twojego psa.
+          </p>
+        </div>
+      </section>
+      <section
+        id="features"
+        class="bg-gray-200 p-4 sm:p-6 lg:p-8 flex justify-center"
+      >
+        <div class="pt-12 max-w-7xl grid grid-cols-1 grid-rows-2 gap-8">
+          <dg-card
+            imgSrc="../../assets/images/jump-w-pumi.png"
+            title="Agility"
+            content="Ale to nie wszystko! DoggieNote oferuje również dedykowany moduł Zawody, który pozwala zbierać informacje o wydarzeniach, sędziach, biegach i wynikach. Możesz zanotować swoje mocne strony i obszary do poprawy, dzięki czemu każde zawody stanowią krok w kierunku stania się lepszym zespołem."
+          ></dg-card>
+          <dg-card
+            imgSrc="../../assets/images/walk-w-pumi.png"
+            title="Spacery"
+            content="DoggieNote to idealne narzędzie dla miłośników długich spacerów, pływania i całodniowych wycieczek pieszych ze swoimi psami. Czy to relaksujący spacer po lesie, energetyczne pływanie w jeziorze, czy wyprawa na szlak górski - DoggieNote jest przy Tobie, pomagając zapisywać trasy, monitorować czas aktywności oraz zapisywać cenne wspomnienia z każdej przygody."
+          ></dg-card>
+          <dg-card
+            imgSrc="../../assets/images/vet-w-pumi.png"
+            title="Zdrowie"
+            content="DoggieNote prezentuje niezastąpiony moduł do monitorowania zdrowia Twojego psa, będący kluczowym narzędziem dla każdego odpowiedzialnego właściciela. Umożliwia on dokładne śledzenie kluczowych wskaźników zdrowotnych, takich jak waga, dieta, poziom aktywności oraz ewentualne objawy chorobowe. DoggieNote, jako wszechstronny asystent zdrowotny, nie tylko wspiera w planowaniu aktywności, ale także w trosce o dobre samopoczucie i zdrowie Twojego psa."
+          ></dg-card>
+          <dg-card
+            imgSrc="../../assets/images/fit-w-pumi.png"
+            title="Fitness"
+            content="Ruszaj w drogę do zdrowia i doskonałej formy razem z Twoim czworonożnym przyjacielem dzięki modułowi Fitness w DoggieNote! Śledź wasz postęp, ustawiaj cele i ciesz się każdym osiągnięciem. Fitness z DoggieNote to nie tylko poprawa kondycji fizycznej – to także wspaniała okazja do budowania wyjątkowej więzi i wspólnego odkrywania radości z aktywnego życia. Dołącz do nas i zacznij przygodę z fitness razem z Twoim psem już dziś!"
+          ></dg-card>
+        </div>
+      </section>
+      <section
+        id="qAndA"
+        class="p-4 sm:p-6 lg:p-8 flex justify-start bg-gray-100"
+      >
+        <div class="max-w-7xl mx-auto">
+          <details
+            class="open:bg-white dark:open:bg-slate-900 open:ring-1 open:ring-black/5 dark:open:ring-white/10 open:shadow-lg p-6 rounded-3xl"
+          >
+            <summary
+              class="text-lg leading-6 text-slate-900 dark:text-white font-semibold select-none"
+              i18n="whoIsTheApplicationFor"
+            >
+              Dlaczego na grafikach są same Pumi?
+            </summary>
+            <div
+              class="mt-3 text-base leading-6 text-slate-600 dark:text-slate-400"
+            >
+              <p i18n="whoIsTheApplicationForAnswer">
+                W naszym serwisie DoggieNote, z dumą prezentujemy psa rasy Pumi
+                na wszystkich naszych grafikach. Jako wielbiciele i właściciele
+                tych uroczych, energicznych i inteligentnych psów, chcemy
+                podkreślić ich wyjątkowość i wszechstronność. Pumi, ze swoją
+                charakterystyczną kręconą sierścią i czujnym spojrzeniem,
+                idealnie odzwierciedla ducha naszej aplikacji – pełen energii,
+                inteligencji i gotowości do akcji. Wykorzystując obrazy Pumików
+                w różnych scenariuszach, od aktywności fizycznych po chwile
+                relaksu, chcemy pokazać, jak elastyczny i dostosowawczy może być
+                życie z psem. Nasze grafiki mają na celu nie tylko zachwycić i
+                zainspirować użytkowników, ale również oddać hołd tej wspaniałej
+                rasie, która jest dla nas szczególnym źródłem radości i
+                inspiracji.
+              </p>
+            </div>
+          </details>
+          <details
+            class="open:bg-white dark:open:bg-slate-900 open:ring-1 open:ring-black/5 dark:open:ring-white/10 open:shadow-lg p-6 rounded-3xl"
+          >
+            <summary
+              class="text-lg leading-6 text-slate-900 dark:text-white font-semibold select-none"
+              i18n="whoIsTheApplicationFor"
+            >
+              Czy z serwisu DoggieNote mogę korzystać bezpołatnie?
+            </summary>
+            <div
+              class="mt-3 text-base leading-6 text-slate-600 dark:text-slate-400"
+            >
+              <p i18n="whoIsTheApplicationForAnswer">
+                Tak. Aktualnie serwis jest w fazie testów i jest dostępny dla wszystkich zaiteresowanych jego testowaniem bezpłatnie. W przyszłości, zastrzegamy sobie jednak możliwość wprowadzenia opłat w modelu subskrypcji do części usług serwisu.
+              </p>
+            </div>
+          </details>
+          <details
+            class="open:bg-white dark:open:bg-slate-900 open:ring-1 open:ring-black/5 dark:open:ring-white/10 open:shadow-lg p-6 rounded-3xl"
+          >
+            <summary
+              class="text-lg leading-6 text-slate-900 dark:text-white font-semibold select-none"
+              i18n="whoIsTheApplicationFor"
+            >
+              Pamphilos Team - kim jesteśmy?
+            </summary>
+            <div
+              class="mt-3 text-base leading-6 text-slate-600 dark:text-slate-400"
+            >
+              <p i18n="whoIsTheApplicationForAnswer">
+                Tu będzie odpowiedź.
+              </p>
+            </div>
+          </details>
+        </div>
+      </section>
     </div>
   </main>
   <dg-footer></dg-footer>

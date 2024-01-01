@@ -12,3 +12,45 @@
     transform: scale(1);
     opacity: 1;
 }
+
+.section-main {
+    display: flex;
+    flex-direction: column;
+}
+
+.section-content {
+    display: flex;
+    justify-content: center;
+
+}
+
+/* nav:before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #1f2d37;
+    z-index: 0;
+} */
+/* 
+nav {
+    position: fixed;
+    background: linear-gradient(180deg, #000000 0%, #1f2d37 100%);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    transition: all 0.3s ease-in-out;
+} */
+
+.blur {
+    position: fixed;
+    background: linear-gradient(180deg, #000000 0%, #1f2d37 100%);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(24px);
+    transition: all 0.3s ease-in-out;
+}
+
+.dropdown-menu {
+   /* background-color: black !important; */
+}
